@@ -1,14 +1,17 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import { Link } from '@chakra-ui/next-js'
+import {  Image } from '@chakra-ui/react'
 
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-    <Link href='/about' color='blue.400' _hover={{ color: 'blue.500' }}>
-      About
-    </Link>
+    <div>
+      <Image
+        borderRadius='full'
+        boxSize='150px'
+        src='https://bit.ly/dan-abramov'
+        alt='Dan Abramov'
+      />
+      <Link href='/about' _hover={{color: '#0037a4'}}>About</Link>
+    </div>
   )
 }
