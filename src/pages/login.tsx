@@ -28,9 +28,7 @@ function Login() {
       setIsSubmitting(false);
 
       if (result?.error) {
-        console.log('Erro no signIn');
-
-        popUplaert('erro ao Logar', alertTypes.ERROR)
+        popUplaert('Credenciais Inválidas', alertTypes.ERROR)
         return setIsSubmitting(false);
       }
 
