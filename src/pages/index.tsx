@@ -1,7 +1,7 @@
 import { Link } from '@chakra-ui/next-js'
-import {  Image } from '@chakra-ui/react'
+import {  Button, Image } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession, signOut, useSession } from 'next-auth/react';
 
 
 export default function Home() {
@@ -20,6 +20,7 @@ export default function Home() {
         alt='Dan Abramov'
       />
       <Link href='/about' _hover={{color: '#0037a4'}}>About</Link>
+      <Button onClick={() => signOut()}>Sign out</Button>
     </div>
   )
 }
