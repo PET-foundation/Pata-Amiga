@@ -16,7 +16,7 @@ export const theme = extendTheme({ colors })
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={colors}>
+    <ChakraProvider>
       <Component {...pageProps} />
     </ChakraProvider>
   )
