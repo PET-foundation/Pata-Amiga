@@ -4,6 +4,7 @@ import { Link } from '@chakra-ui/next-js'
 import {  Button, Image } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next';
 import { getSession, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 
 export default function Home({profilePicture}) {
@@ -33,6 +34,10 @@ export default function Home({profilePicture}) {
     </div>
   )
 }
+const handleSingOut = async() => {
+  await signOut()
+}
+
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getSession(context);
@@ -45,11 +50,26 @@ export const getServerSideProps: GetServerSideProps = async context => {
       }
     };
   }
-  const {profilePicture} = await UserServiceMethods.getUserTheirSelf(session.user.token)
+
+  let profileUserPicture = ''
+
+  try {
+    const {profilePicture} = await UserServiceMethods.getUserTheirSelf(session.user.token)
+    
+    profileUserPicture = profilePicture
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false
+      }
+    }
+  }
+
   return {
     props: {
       session,
-      profilePicture
+      profileUserPicture
     }
   };
 };
