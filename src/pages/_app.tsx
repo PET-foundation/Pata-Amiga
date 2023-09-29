@@ -15,10 +15,10 @@ const colors = {
 
 export const theme = extendTheme({ colors })
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps) {
   return (
     <ChakraProvider>
-      <SessionProvider session={...pageProps.session}>
+      <SessionProvider session={session}>
       <Component {...pageProps} />
       </SessionProvider>
     </ChakraProvider>

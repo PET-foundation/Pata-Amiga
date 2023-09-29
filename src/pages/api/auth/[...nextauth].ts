@@ -11,7 +11,7 @@ export const authOptions = {
         name: 'Credentials',
         credentials: {},
         async authorize({ email, password }: CredentialsLogin) {
-          const { data, status } = await api().post('/auth/login', {
+          const { data, status } = await api().post<loginResponse>('/auth/login', {
             email,
             password
           });
@@ -20,7 +20,7 @@ export const authOptions = {
 
             console.log(data);
 
-            throw new LoginInvalidError(data.error.message || 'Credenciais inválidas');
+            throw new LoginInvalidError(`Credenciais inválidas ${data}`);
 
           } else if (status === 500) {
             throw new Error('erro ao logar');
@@ -32,8 +32,10 @@ export const authOptions = {
             return {
               token: data.token
             };
+          } else {
+            return null;
           }
-          return "";
+          
         }
       })
     ],
