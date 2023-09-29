@@ -1,26 +1,35 @@
+import { TopMenu } from '@/components/TopMenu';
+import UserServiceMethods from '@/service/axios/user/userRequests';
 import { Link } from '@chakra-ui/next-js'
 import {  Button, Image } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next';
 import { getSession, signOut, useSession } from 'next-auth/react';
 
 
-export default function Home() {
+export default function Home({profilePicture}) {
   const { data: session, status } = useSession();
+
+
   if (status === 'authenticated') {
     console.log(JSON.stringify(session));
+  }
+
+  console.log(profilePicture)
+
+  const onClick = () => {}
+
+  const onSearch = (search: string) => {
+    console.log(search)
   }
 
   if (status === 'loading') return <p>Loading</p>;
   return (
     <div>
-      <Image
-        borderRadius='full'
-        boxSize='150px'
-        src='https://bit.ly/dan-abramov'
-        alt='Dan Abramov'
+      <TopMenu 
+      profilePicture={profilePicture} 
+      onClick={onClick} userName='lasdfkj'
+      onSearch={onSearch}
       />
-      <Link href='/about' _hover={{color: '#0037a4'}}>About</Link>
-      <Button onClick={() => signOut()}>Sign out</Button>
     </div>
   )
 }
@@ -36,9 +45,11 @@ export const getServerSideProps: GetServerSideProps = async context => {
       }
     };
   }
+  const {profilePicture} = await UserServiceMethods.getUserTheirSelf(session.user.token)
   return {
     props: {
-      session
+      session,
+      profilePicture
     }
   };
 };

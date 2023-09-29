@@ -2,31 +2,30 @@ import { CredentialsLogin } from "@/utils/types/CredentialsLogin";
 import { api } from "../config/axios.config";
 import LoginInvalidError from "../config/erros/LoginInvalideError";
 import { CredentialsRegister } from "@/utils/types/CredentialsRegister";
+import { loginResponse, registerResponse, userResponse } from "./userResponses";
 
 const Login = async (
     credentials: CredentialsLogin
-): Promise<loginResponse | LoginInvalidError> => {
+): Promise<loginResponse> => {
     try {
         const {data, status} = await api().post<loginResponse>('/auth/login', credentials);
 
-        if(status == 403) return new LoginInvalidError("Credenciais invalidas");
+        if(status == 403) throw new LoginInvalidError("Credenciais invalidas");
 
         return data; 
 
     } catch (error: any) {
-        return new LoginInvalidError(error.msg || "Erro ao fazer login");
+        throw new LoginInvalidError(error.msg || "Erro ao fazer login");
     }
 }
 
 const register = async (
   credentials: CredentialsRegister
-): Promise<registerResponse | LoginInvalidError> => {
+): Promise<registerResponse> => {
     try {
         const { data, status } = await api().post('/auth/register', credentials);
 
         console.log(`aaaaaaaaaaaaaa status: ${status} data: ${data}`);
-
-        
 
         return data;
     } catch (error: any) {
@@ -35,9 +34,28 @@ const register = async (
     }
 }
 
+const getUserTheirSelf = async (
+  token: string
+
+): Promise<userResponse> => {
+  try{
+    const { data, status } = await api().get('/user/themselves', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    return data;
+
+  } catch(error: any) {
+    throw new LoginInvalidError(`Erro ao buscar usuário`);
+  }
+}
+
 const UserServiceMethods = {
     Login,
-    register
+    register,
+    getUserTheirSelf
 };
 
 export default UserServiceMethods;
