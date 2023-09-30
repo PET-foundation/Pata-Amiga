@@ -31,6 +31,7 @@ export default function Home({profilePicture}) {
       onClick={onClick} userName='lasdfkj'
       onSearch={onSearch}
       />
+      <Button onClick={handleSingOut}>Sign Out</Button>
     </div>
   )
 }
@@ -58,12 +59,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     
     profileUserPicture = profilePicture
   } catch (error) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false
-      }
-    }
+   console.log(error)
   }
 
   return {

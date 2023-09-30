@@ -24,3 +24,40 @@ interface Contact {
   instagram: string
   facebook: string
 }
+
+export interface PostResponse {
+  id: number
+  uuid: string
+  name: string
+  description: string
+  picture: string
+  location: string
+  info: Info
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Info {
+  specie: string
+  race: string
+  sex: string
+  age: string
+  weight: string
+  castrated: boolean
+  vaccinated: boolean
+  ungerminated: boolean
+  pedigree: boolean
+  specialNeeds: boolean
+  port: string
+}
+
+export interface PostPreviewPros {
+  userName: string
+  dataPost: string
+  description: string
+  userPicture: string
+  postPicture: string
+  location: string
+  postUuid: string
+  createdAt: string
+}
