@@ -14,7 +14,7 @@ interface ProfileProps {
 
 function Profile({userResponseAPI, postsResponseAPI}: ProfileProps) {
 
-  /* const convertPostsToPostPreview = (posts: PostResponse[]) => {
+  const convertPostsToPostPreview = (posts: PostResponse[]) => {
     const postPreview: PostPreviewPros[] = []
     posts.map(post => {
       postPreview.push({
@@ -30,8 +30,11 @@ function Profile({userResponseAPI, postsResponseAPI}: ProfileProps) {
     })
     return postPreview
   }
-  const userPosts = convertPostsToPostPreview(postsResponseAPI) */
-  console.log(postsResponseAPI)
+  if(postsResponseAPI.length > 0) {
+
+    const userPosts = convertPostsToPostPreview(postsResponseAPI) 
+    console.log(postsResponseAPI)
+  }
 
   const onEditProfile = () => {
     console.log('edit profile')
@@ -51,7 +54,12 @@ function Profile({userResponseAPI, postsResponseAPI}: ProfileProps) {
           userWhatsApp={userResponseAPI.contact.whatsapp}
           onClick={onEditProfile}
         />
-        <PostSession  posts={posts}/>
+        <PostSession  posts={
+          convertPostsToPostPreview(postsResponseAPI).length > 0 ? 
+          convertPostsToPostPreview(postsResponseAPI) :
+          posts
+        
+        } />
       </Flex>
     </>
   );

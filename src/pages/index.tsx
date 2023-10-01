@@ -7,7 +7,7 @@ import { getSession, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
 
-export default function Home({profilePicture}) {
+export default function Home({profileUserPicture}) {
   const { data: session, status } = useSession();
 
 
@@ -15,7 +15,7 @@ export default function Home({profilePicture}) {
     console.log(JSON.stringify(session));
   }
 
-  console.log(profilePicture)
+  console.log(`profilePicture: ${profileUserPicture}`)
 
   const onClick = () => {}
 
@@ -27,7 +27,7 @@ export default function Home({profilePicture}) {
   return (
     <div>
       <TopMenu 
-      profilePicture={profilePicture} 
+      profilePicture={profileUserPicture} 
       onClick={onClick} userName='lasdfkj'
       onSearch={onSearch}
       />

@@ -36,6 +36,7 @@ export function PostPreview({
         <Text fontSize="lg">{postCreatedAt ? `${getPostCreatedAt}`: "sem informação"}h</Text>
       </Flex>
     </Container>
+    <Link href={`/posts/${postUuid}`} fontStyle='unset'>
     <Container maxW='container.sm' bg='white' color='black' border="5px solid" borderColor="black">
       <Flex direction="column" w="100%" gap={8} alignItems="center" paddingTop="3">
         <Text 
@@ -64,6 +65,7 @@ export function PostPreview({
         </Center>
       </Flex>
     </Container>
+    </Link>
   </VStack>
 </>
 

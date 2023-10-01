@@ -1,4 +1,4 @@
-import { FormControl } from '@chakra-ui/form-control';
+import { FormControl, FormErrorMessage } from '@chakra-ui/form-control';
 import { Button, Flex, IconButton, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
 import { useState } from 'react';
 import { AiOutlineWhatsApp, AiFillInstagram, AiFillFacebook } from "react-icons/ai";
@@ -25,6 +25,10 @@ export default function RegisterForm({ onRegister, isSubmitting }: RegisterFormP
   const [whatsapp, setWhatsapp] = useState('');
   const [instagram, setInstagram] = useState('');
   const [facebook, setFacebook] = useState('');
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -59,6 +63,22 @@ export default function RegisterForm({ onRegister, isSubmitting }: RegisterFormP
     onRegister(name, email, password, phone, whatsapp, instagram, facebook);
   };
 
+  const onBlurNameError = () => {
+    setNameError(name === '')
+  }
+
+  const onBlurEmailError = () => {
+    setEmailError(email === '')
+  }
+
+  const onBlurPasswordError = () => {
+    setPasswordError(password === '')
+  }
+
+  const onBlurPhoneError = () => {
+    setPhoneError(phone === '')
+  }
+
 
   return (
         <form onSubmit={handleFormSubmit}>
@@ -67,8 +87,10 @@ export default function RegisterForm({ onRegister, isSubmitting }: RegisterFormP
               placeholder='Informe seu Nome'
               value={name}
               onChange={handleNameChange}
+              onBlur={onBlurNameError}
               _hover={{ bgColor: 'gray.900' }}
             />
+            {nameError && <FormErrorMessage>Name is required.</FormErrorMessage>}
           </FormControl>
           <FormControl isRequired mb={4}>
             <Input
@@ -76,8 +98,10 @@ export default function RegisterForm({ onRegister, isSubmitting }: RegisterFormP
               placeholder='Informe seu Email'
               value={email}
               onChange={handleEmailChange}
+              onBlur={onBlurEmailError}
               _hover={{ bgColor: 'gray.900' }}
             />
+            {emailError && <FormErrorMessage>Email is required.</FormErrorMessage>}
           </FormControl>
           <FormControl isRequired mb={4}>
             <Input
@@ -85,16 +109,21 @@ export default function RegisterForm({ onRegister, isSubmitting }: RegisterFormP
               placeholder='Informe sua Senha'
               value={password}
               onChange={handlePasswordChange}
+              onBlur={onBlurPasswordError}
               _hover={{ bgColor: 'gray.900' }}
             />
+            {passwordError && <FormErrorMessage>Password is required.</FormErrorMessage>}
           </FormControl>
           <FormControl isRequired mb={4}>
             <Input
+              type='number'
               placeholder='Informe seu Telefone'
               value={phone}
               onChange={handlePhoneChange}
+              onBlur={onBlurPhoneError}
               _hover={{ bgColor: 'gray.900' }}
             />
+            {phoneError && <FormErrorMessage>Phone is required.</FormErrorMessage>}
           </FormControl>
           <InputGroup size="md">
             <Input

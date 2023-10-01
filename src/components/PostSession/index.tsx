@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { PostPreview } from '../PostPreview';
-import { Box, Button, Center, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Image, Link, Text } from '@chakra-ui/react';
 import { PostPreviewPros } from '@/service/axios/user/userResponses';
 import notFoundPost from '/public/img/posts_not_found.png'
 
@@ -29,7 +29,7 @@ export function PostSession({ posts, profilePicture, userName }: PostSessionProp
           postImage={post.postPicture}
           profilePicture={profilePicture}
           userName={userName}
-          />
+        />
       )) 
       : 
       <>
