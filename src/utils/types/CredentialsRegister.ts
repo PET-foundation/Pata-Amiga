@@ -8,4 +8,4 @@ export type CredentialsRegister = {
   facebook?: string;
   profilePicture?: string;
   banner?: string;
-}
+};
