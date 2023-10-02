@@ -5,6 +5,7 @@ import { popUplaert } from '@/utils/alerts/popUpAlert';
 import { alertTypes } from '@/utils/types/alertTypes';
 import { GetServerSideProps } from 'next';
 import { getSession, useSession } from 'next-auth/react';
+import Head from 'next/head';
 
 interface EditProfileProps {
   userResponseAPI: userResponse;
@@ -45,6 +46,9 @@ function EditProfile({ userResponseAPI }: EditProfileProps) {
   }
   return (
     <>
+    <Head>
+        <title>Editar Perfil</title>
+    </Head>
       <ProfileHeader
         isEditable={true}
         profilePicture={userResponseAPI.profilePicture}

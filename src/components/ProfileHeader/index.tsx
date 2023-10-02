@@ -159,6 +159,18 @@ export function ProfileHeader({
           _hover={isEditable && { opacity: '0.5' }}
           onClick={handleBoxClickImageBanner}
         >
+          {!isEditable && (
+            <Button
+              as={Link}
+              position="absolute"
+              mt="10"
+              ml="10"
+              colorScheme="blue"
+              variant="solid"
+              href="/"
+              rightIcon={<AiOutlineArrowLeft />}
+            ></Button>
+          ) }
           <Image
             src={userBanner ? userBannerImage : 'https://bit.ly/2Z4KKcF'}
             alt="Banner Image"
