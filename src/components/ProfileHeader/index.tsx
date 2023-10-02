@@ -52,7 +52,9 @@ export function ProfileHeader({
   isEditable = false,
   onSubmit,
 }: ProfileHeaderProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const profileFileInputRef = useRef<HTMLInputElement>(null);
+  const bannerFileInputRef = useRef<HTMLInputElement>(null);
+
 
   const [profileImage, setProfileImage] = useState(profilePicture);
   const [userBannerImage, setUserBannerImage] = useState(userBanner);
@@ -72,7 +74,7 @@ export function ProfileHeader({
   };
 
   function handleChangeProfilePicture(event: any) {
-    const file = event.target.files[0]; // Pega o primeiro arquivo selecionado
+    const file = event.target.files[0];
 
     if (file) {
       const reader = new FileReader();
@@ -87,7 +89,7 @@ export function ProfileHeader({
   }
 
   function handleChangeBanner(event: any) {
-    const file = event.target.files[0]; // Pega o primeiro arquivo selecionado
+    const file = event.target.files[0]; 
 
     if (file) {
       const reader = new FileReader();
@@ -101,9 +103,15 @@ export function ProfileHeader({
     }
   }
 
-  const handleBoxClick = () => {
-    if (isEditable && fileInputRef.current) {
-      fileInputRef.current.click();
+  const handleBoxClickImageProfile = () => {
+    if (isEditable) {
+      profileFileInputRef.current.click();
+    }
+  };
+
+  const handleBoxClickImageBanner = () => {
+    if (isEditable) {
+      bannerFileInputRef.current.click();
     }
   };
 
@@ -126,7 +134,7 @@ export function ProfileHeader({
           bg="blue.500"
           position="relative"
           _hover={isEditable && { opacity: '0.5' }}
-          onClick={handleBoxClick}
+          onClick={handleBoxClickImageBanner}
         >
           <Image
             src={userBanner ? userBannerImage : 'https://bit.ly/2Z4KKcF'}
@@ -137,7 +145,7 @@ export function ProfileHeader({
           />
           <input
             type="file"
-            ref={fileInputRef}
+            ref={bannerFileInputRef}
             style={{ display: 'none' }}
             onChange={handleChangeBanner}
           />
@@ -174,7 +182,7 @@ export function ProfileHeader({
           mt="100"
           ml="5"
           _hover={isEditable && { opacity: '0.5' }}
-          onClick={handleBoxClick}
+          onClick={handleBoxClickImageProfile}
         >
           <Image
             src={profilePicture ? profileImage : 'https://bit.ly/dan-abramov'}
@@ -187,7 +195,7 @@ export function ProfileHeader({
           )}
           <input
             type="file"
-            ref={fileInputRef}
+            ref={profileFileInputRef}
             style={{ display: 'none' }}
             onChange={handleChangeProfilePicture}
           />
