@@ -18,8 +18,11 @@ import {
   AiOutlineWhatsApp,
   AiFillEdit,
   AiOutlineSave,
+  AiOutlineArrowLeft
 } from 'react-icons/ai';
 import { use, useEffect, useRef, useState } from 'react';
+import { popUplaert } from '@/utils/alerts/popUpAlert';
+import { alertTypes } from '@/utils/types/alertTypes';
 
 interface ProfileHeaderProps {
   userName: string;
@@ -77,6 +80,10 @@ export function ProfileHeader({
     const file = event.target.files[0];
 
     if (file) {
+      if (!(file.size <= 2 * 1024 * 1024)) {
+        popUplaert('A imagem deve ter no máximo 2MB', alertTypes.WARNING)
+        return
+      }
       const reader = new FileReader();
 
       reader.onload = (e) => {
@@ -92,6 +99,10 @@ export function ProfileHeader({
     const file = event.target.files[0]; 
 
     if (file) {
+      if (!(file.size <= 2 * 1024 * 1024)) {
+        popUplaert('A imagem deve ter no máximo 2MB', alertTypes.WARNING)
+        return
+      }
       const reader = new FileReader();
 
       reader.onload = (e) => {
@@ -121,9 +132,21 @@ export function ProfileHeader({
   };
 
   const updateUser = () => {
-    if (isValidEmail(userEmailInput)) {
+    if (isValidEmail(userEmailInput) && userNameInput.length > 0) {
+      onSubmit(
+        userNameInput,
+        profileImage,
+        userBannerImage,
+        userLocationInput,
+        userEmailInput,
+        userInstagramInput,
+        userWhatsAppInput,
+      );
+    } else {
+      popUplaert('Preencha os campos corretamente', alertTypes.WARNING)
     }
   };
+
 
   return (
     <>
@@ -151,18 +174,31 @@ export function ProfileHeader({
           />
         </Box>
         {isEditable ? (
-          <>
+          <Flex 
+            direction="column" 
+            mt="30vh"
+            ml="85vw"
+            position="absolute"
+            gap={2}
+            >
             <Button
-              position="absolute"
-              mt="30vh"
-              ml="90vw"
               colorScheme="blue"
               variant="outline"
               rightIcon={<AiOutlineSave />}
+              onClick={updateUser}
             >
               Salvar perfil
             </Button>
-          </>
+            <Button
+              as={Link}
+              colorScheme="blue"
+              variant="solid"
+              href='/profile'
+              leftIcon={<AiOutlineArrowLeft />}
+            >
+              Retornar ao perfil
+            </Button>
+          </Flex>
         ) : (
           <Button
             as={Link}
@@ -204,6 +240,8 @@ export function ProfileHeader({
           {isEditable ? (
             <>
               <Input
+                isInvalid={userNameInput.length === 0}
+                placeholder='Aqui irá ficar o seu nome, que é o seu userName'
                 variant="flushed"
                 value={userNameInput}
                 onChange={(e) => setUserNameInput(e.target.value)}
@@ -223,9 +261,10 @@ export function ProfileHeader({
               <InputGroup>
                 <InputLeftElement pointerEvents="none">@</InputLeftElement>
                 <Input
+                  isReadOnly
+                  placeholder='Aqui irá ficar o seu @, que é o seu userName'
                   variant="flushed"
                   value={makeUserAtSymbol(userNameInput).split('@').join('')}
-                  onChange={(e) => setUserNameInput(e.target.value)}
                   width={userLocationInput.length > 50 ? 'sm' : 'md'}
                 />
               </InputGroup>
@@ -247,6 +286,7 @@ export function ProfileHeader({
                 {isEditable ? (
                   <>
                     <Input
+                      placeholder='Aqui irá ficar a sua localização'
                       variant="flushed"
                       value={userLocationInput}
                       onChange={(e) => setUserLocationInput(e.target.value)}
@@ -265,6 +305,8 @@ export function ProfileHeader({
                 {isEditable ? (
                   <>
                     <Input
+                      placeholder='Aqui irá ficar o seu email'
+                      isInvalid={!isValidEmail(userEmailInput)}
                       type="email"
                       variant="flushed"
                       value={userEmailInput}
@@ -286,6 +328,7 @@ export function ProfileHeader({
                 {isEditable ? (
                   <>
                     <Input
+                      placeholder='Aqui irá ficar o seu instagram se você tiver'
                       variant="flushed"
                       value={userInstagramInput}
                       onChange={(e) => setUserInstagramInput(e.target.value)}
@@ -313,6 +356,7 @@ export function ProfileHeader({
                 {isEditable ? (
                   <>
                     <Input
+                      placeholder='Aqui irá ficar o seu whatsapp se você tiver'
                       variant="flushed"
                       value={userWhatsAppInput}
                       onChange={(e) => setUserWhatsAppInput(e.target.value)}

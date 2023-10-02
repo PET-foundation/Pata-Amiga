@@ -47,10 +47,26 @@ const getUserTheirSelf = async (token: string): Promise<userResponse> => {
   }
 };
 
+const updateUser = async (userUuid: string,token: string, data: Omit<CredentialsRegister, "password">): Promise<void> => {
+  
+  try {
+    const { status } = await api().put(`user/${userUuid}`,data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if(status != 200) throw new LoginInvalidError(`Erro ao buscar usuário`);
+  } catch (error: any) {
+    throw new LoginInvalidError(`Erro ao buscar usuário`);
+  }
+}
+
 const UserServiceMethods = {
   Login,
   register,
   getUserTheirSelf,
+  updateUser
 };
 
 export default UserServiceMethods;
