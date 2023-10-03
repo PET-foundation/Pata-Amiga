@@ -37,9 +37,35 @@ const createPost = async (post: Post, token: string): Promise<boolean> => {
   }
 }
 
+const getAllPosts = async (): Promise<PostResponse[]> => {
+  try {
+    const {data} = await api().get<PostResponse[]>('/posts')
+
+    return data;
+  } catch (error: any) {
+    throw new Error('Erro ao buscar posts');
+  }
+}
+
+const getPostByUuid = async (postUuid: string, token): Promise<PostResponse> => {
+  try {
+    const {data} = await api().get<PostResponse>(`/posts/${postUuid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
+  } catch (error: any) {
+    throw new Error('Erro ao buscar post');
+  }
+}
+
 const PostServieceMethods = {
   getAllPostsFromUser,
-  createPost
+  createPost,
+  getAllPosts,
+  getPostByUuid
 };
 
 export default PostServieceMethods;
