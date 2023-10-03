@@ -11,7 +11,7 @@ import { ReactNode } from 'react';
 
 interface PostPreviewProps {
   profilePicture?: string;
-  userName?: string;
+  userName: string;
   postCreatedAt?: string;
   description: string;
   postUuid: string;
@@ -27,7 +27,9 @@ export function PostPreview({
   postImage,
 }: PostPreviewProps) {
   const getPostCreatedAt = (postCreatedAt: string) => {
-    return new Date(postCreatedAt).toLocaleDateString();
+    const currentDate = new Date();
+    const postDate = new Date(postCreatedAt);
+    return currentDate.getHours() - postDate.getHours();
   };
   return (
     <>
@@ -49,9 +51,9 @@ export function PostPreview({
               borderRadius="full"
               boxSize="8vh"
             />
-            <Text fontSize="lg">@{userName ? userName : 'oi'}</Text>
+            <Text fontSize="lg">@{userName}</Text>
             <Text fontSize="lg">
-              {postCreatedAt ? `${getPostCreatedAt}` : 'sem informação'}h
+              {postCreatedAt ? `${getPostCreatedAt(postCreatedAt)}` : 'sem informação'}h
             </Text>
           </Flex>
         </Container>
@@ -80,9 +82,7 @@ export function PostPreview({
               >
                 {description}
               </Text>
-              <Link href={`/posts/${postUuid}`} fontStyle="unset">
                 ver mais...
-              </Link>
               <Center borderRadius={10}>
                 <Flex
                   direction="row"

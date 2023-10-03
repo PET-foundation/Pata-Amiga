@@ -11,6 +11,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { getSession, signOut } from 'next-auth/react';
 import Head from 'next/head';
+import { useState } from 'react';
 
 interface ProfileProps {
   userResponseAPI: userResponse;
@@ -18,6 +19,9 @@ interface ProfileProps {
 }
 
 function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
+
+  console.log(userResponseAPI.name);
+  
   const convertPostsToPostPreview = (posts: PostResponse[]) => {
     const postPreview: PostPreviewPros[] = [];
     posts.map((post) => {
@@ -32,17 +36,17 @@ function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
         userPicture: userResponseAPI.profilePicture,
       });
     });
+    console.log(`postPreview: ${postPreview}`);
     return postPreview;
   };
   if (postsResponseAPI.length > 0) {
     const userPosts = convertPostsToPostPreview(postsResponseAPI);
-    console.log(postsResponseAPI);
+    console.log(userPosts);
   }
 
   const onEditProfile = () => {
     console.log('edit profile');
   };
-  console.log(JSON.stringify(userResponseAPI));
   const posts: PostPreviewPros[] = [];
   return (
     <>
@@ -61,10 +65,12 @@ function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
         />
         <PostSession
           posts={
-            convertPostsToPostPreview(postsResponseAPI).length > 0
+            postsResponseAPI.length > 0
               ? convertPostsToPostPreview(postsResponseAPI)
               : posts
           }
+          userName={userResponseAPI.name}
+          profilePicture={userResponseAPI.profilePicture}
         />
       </Flex>
     </>
@@ -95,6 +101,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     userResponseAPI = userResponse;
     const post = await PostServieceMethods.getAllPostsFromUser(
       userResponseAPI.uuid,
+      session.user.token,
     );
 
     postsResponseAPI = post;
