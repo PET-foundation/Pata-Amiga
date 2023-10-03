@@ -1,8 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pata Amiga Web
+### The [Pata Amiga Web](https://pet-foundation.github.io/Pata-Amiga-LandingPage/) is a website where the users can  interact with other peoples to adopt news pets and also advertise.
 
-## Getting Started
+# How to use?
+### You need to create a new account using our [site](https://pet-foundation.github.io/Pata-Amiga-LandingPage/) to register. 
+<p align="center">
+<img src="https://github.com/PET-foundation/Pata-Amiga/assets/124841543/70901fba-a32a-40d2-aeb9-8dff55674226" alt="Login" width="500" height="300">
+</p>
 
-First, run the development server:
+<p align="center"> 
+  
+<h2>After doing this, you can just log and enjoy.</h2>
+</p>
+
+<p align="right"> 
+  
+![PopUp login](https://github.com/PET-foundation/Pata-Amiga/assets/124841543/9227b97d-dc26-4d18-a6d1-4c876b07bdbb)
+</p>
+
+<p align="center">
+  
+![Home page](https://github.com/PET-foundation/Pata-Amiga/assets/124841543/260bb026-abae-406f-9597-290b781e62aa)
+</p>
+
 
 ```bash
 npm run dev
@@ -11,6 +30,7 @@ yarn dev
 # or
 pnpm dev
 ```
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
