@@ -1,0 +1,4 @@
+.next
+node_modules
+/*.js
+src/pages/profile/index.tsx

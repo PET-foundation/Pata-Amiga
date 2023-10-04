@@ -1,0 +1,7 @@
+{
+  "editor.guides.bracketPairs": "active",
+    "editor.formatOnSave": true,
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    }
+}
