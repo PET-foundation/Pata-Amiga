@@ -1,6 +1,6 @@
 import LoginForm from '@/components/LoginForm';
 import { popUplaert } from '@/utils/alerts/popUpAlert';
-import { Flex, Heading, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Heading, Link, Text, useColorModeValue } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -54,6 +54,12 @@ function Login() {
         <Flex direction="column" background={formBackground} p={12} rounded={6}>
           <Heading mb={6}>Login</Heading>
           <LoginForm onLogin={handleLogin} isSubmitting={isSubmitting} />
+          <Text mt={6} fontSize="sm">
+            Não tem uma conta?
+            <Link color="blue.500" href="/register">
+              Registre-se
+            </Link>
+          </Text>
         </Flex>
       </Flex>
     </>

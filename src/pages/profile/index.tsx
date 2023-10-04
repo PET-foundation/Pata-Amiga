@@ -20,7 +20,8 @@ interface ProfileProps {
 
 function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
 
-  console.log(userResponseAPI.name);
+  console.log(JSON.stringify(postsResponseAPI));
+  console.log(userResponseAPI.uuid)
   
   const convertPostsToPostPreview = (posts: PostResponse[]) => {
     const postPreview: PostPreviewPros[] = [];
@@ -34,6 +35,8 @@ function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
         location: post.location,
         userName: userResponseAPI.name,
         userPicture: userResponseAPI.profilePicture,
+        userUuid: userResponseAPI.uuid,
+        postUserUuid: post.userUuid,
       });
     });
     console.log(`postPreview: ${postPreview}`);
@@ -42,6 +45,10 @@ function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
   if (postsResponseAPI.length > 0) {
     const userPosts = convertPostsToPostPreview(postsResponseAPI);
     console.log(userPosts);
+  }
+
+  const onDeletePost = (postUuid: string) => {
+    console.log(`deleting post ${postUuid}`);
   }
 
   const onEditProfile = () => {
@@ -71,6 +78,7 @@ function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
           }
           userName={userResponseAPI.name}
           profilePicture={userResponseAPI.profilePicture}
+          userUuid={userResponseAPI.uuid}
         />
       </Flex>
     </>

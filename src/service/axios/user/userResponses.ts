@@ -26,15 +26,18 @@ interface Contact {
 }
 
 export interface PostResponse {
-  id: number;
-  uuid: string;
-  name: string;
-  description: string;
-  picture: string;
-  location: string;
-  info: Info;
-  createdAt: string;
-  updatedAt: string;
+  id: number
+  uuid: string
+  name: string
+  description: string
+  picture: string
+  location: string
+  info: Info
+  userUuid: string
+  userPicture: string
+  userName: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface Info {
@@ -60,4 +63,6 @@ export interface PostPreviewPros {
   location: string;
   postUuid: string;
   createdAt: string;
+  userUuid?: string;
+  postUserUuid?: string;
 }

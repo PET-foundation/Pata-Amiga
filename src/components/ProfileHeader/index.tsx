@@ -18,11 +18,13 @@ import {
   AiOutlineWhatsApp,
   AiFillEdit,
   AiOutlineSave,
-  AiOutlineArrowLeft
+  AiOutlineArrowLeft,
+  AiOutlineLogout
 } from 'react-icons/ai';
 import { use, useEffect, useRef, useState } from 'react';
 import { popUplaert } from '@/utils/alerts/popUpAlert';
 import { alertTypes } from '@/utils/types/alertTypes';
+import { signOut, useSession } from 'next-auth/react';
 
 interface ProfileHeaderProps {
   userName: string;
@@ -55,6 +57,7 @@ export function ProfileHeader({
   isEditable = false,
   onSubmit,
 }: ProfileHeaderProps) {
+  const { data: session, status } = useSession();
   const profileFileInputRef = useRef<HTMLInputElement>(null);
   const bannerFileInputRef = useRef<HTMLInputElement>(null);
 
@@ -92,6 +95,7 @@ export function ProfileHeader({
       };
 
       reader.readAsDataURL(file);
+      console.log(profileImage)
     }
   }
 
@@ -129,6 +133,10 @@ export function ProfileHeader({
   const isValidEmail = (email: string) => {
     const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return regexEmail.test(email);
+  };
+
+  const handleSingOut = async () => {
+    await signOut();
   };
 
   const updateUser = () => {
@@ -212,18 +220,30 @@ export function ProfileHeader({
             </Button>
           </Flex>
         ) : (
-          <Button
+          <Flex direction='column' gap={5} position="absolute"
+          mt="30vh"
+          ml="85vw"
+          mr='12'>
+            <Button
             as={Link}
-            position="absolute"
-            mt="30vh"
-            ml="90vw"
+            
             colorScheme="blue"
             variant="outline"
             href="/profile/edit"
             rightIcon={<AiFillEdit />}
-          >
-            editar perfil
-          </Button>
+            >
+              editar perfil
+            </Button>
+            <Button
+              colorScheme="blue"
+              variant="outline"
+              onClick={handleSingOut}
+              leftIcon={<AiOutlineLogout/>}
+            >
+              Sair
+            </Button>
+          </Flex>
+
         )}
         <Box
           position="absolute"

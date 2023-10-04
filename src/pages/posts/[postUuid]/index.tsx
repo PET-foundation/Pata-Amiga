@@ -1,11 +1,12 @@
 import PostServieceMethods from "@/service/axios/posts/postsRequests";
 import { PostResponse } from "@/service/axios/user/userResponses";
 import { PortTypes } from "@/utils/types/portTypes";
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Link, Text } from "@chakra-ui/react";
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import {ImLocation} from 'react-icons/im';
+import {AiOutlineArrowLeft} from 'react-icons/ai'
 
 interface GetPostByUuidProps {
   postResponseAPI: PostResponse;
@@ -43,6 +44,20 @@ function GetPostByUuid({postResponseAPI}: GetPostByUuidProps) {
     </Head>
       <Flex direction="column" alignItems='center' h="100vh">
         <Box w='100%' h='55%' >
+          <Link
+            colorScheme="teal"
+            variant='solid'
+            position='fixed'
+            padding='2'
+            border='1px solid'
+            borderColor='blue.200'
+            borderRadius={5}
+            mt={6}
+            ml={6}
+            href="/"
+          >
+            <AiOutlineArrowLeft/>
+          </Link>
           <Image 
             src={postResponseAPI.picture} 
             alt={postResponseAPI.description}

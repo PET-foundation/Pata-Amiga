@@ -1,3 +1,4 @@
+import { PostResponse } from '@/service/axios/user/userResponses';
 import { popUplaert } from '@/utils/alerts/popUpAlert';
 import { Post } from '@/utils/types/CreatePost';
 import { alertTypes } from '@/utils/types/alertTypes';
@@ -11,28 +12,30 @@ interface CreatePostFormProps {
     post: Post
   ) => void;
   isSubmitting?: boolean;
+  isEdit?: boolean;
+  postResponse?: PostResponse
 }
 
-export function CreatePostForm({ onSubmit, isSubmitting = false }: CreatePostFormProps) {
+export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postResponse }: CreatePostFormProps) {
   const inputImageRef = useRef<HTMLInputElement>(null);
 
   const [isSubmittingState, setIsSubmittingState] = useState(isSubmitting);
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [location, setLocation] = useState('');
-  const [image, setImage] = useState('');
-  const [species, setSpecies] = useState('');
-  const [race, setRace] = useState('');
-  const [sex, setSex] = useState('M');
-  const [age, setAge] = useState('');
-  const [weight, setWeight] = useState('');
-  const [castrated, setCastrated] = useState(false);
-  const [vaccinated, setVaccinated] = useState(false);
-  const [wormed, setWormed] = useState(false);
-  const [pedigree, setPedigree] = useState(false);
-  const [specialCare, setSpecialCare] = useState(false);
-  const [size, setSize] = useState('SMALL');
+  const [name, setName] = useState(isEdit ? postResponse.name : '');
+  const [description, setDescription] = useState(isEdit ? postResponse.description : '');
+  const [location, setLocation] = useState(isEdit ? postResponse.location : '');
+  const [image, setImage] = useState(isEdit ? postResponse.picture : '');
+  const [species, setSpecies] = useState(isEdit ? postResponse.info.specie : '');
+  const [race, setRace] = useState(isEdit ? postResponse.info.race: '');
+  const [sex, setSex] = useState(isEdit ? postResponse.info.sex : '');
+  const [age, setAge] = useState(isEdit ? postResponse.info.age : '');
+  const [weight, setWeight] = useState(isEdit ? postResponse.info.weight : '');
+  const [castrated, setCastrated] = useState(isEdit ? postResponse.info.castrated : false);
+  const [vaccinated, setVaccinated] = useState(isEdit ? postResponse.info.vaccinated : false);
+  const [wormed, setWormed] = useState(isEdit ? postResponse.info.ungerminated : false);
+  const [pedigree, setPedigree] = useState(isEdit ? postResponse.info.pedigree : false);
+  const [specialCare, setSpecialCare] = useState(isEdit ? postResponse.info.specialNeeds : false);
+  const [size, setSize] = useState(isEdit ? postResponse.info.port : 'SMALL');
 
   const handleBoxClick = () => {
     inputImageRef.current.click();
@@ -215,11 +218,11 @@ export function CreatePostForm({ onSubmit, isSubmitting = false }: CreatePostFor
           onChange={handleSpeciesChange}
           value={species}
         >
-          <option value='option1'>Gato</option>
-          <option value='option2'>Cachorro</option>
-          <option value='option2'>Coelho</option>
-          <option value='option2'>Passarinho</option>
-          <option value='option2'>Sapo</option>
+          <option value='Gato'>Gato</option>
+          <option value='Cachorro'>Cachorro</option>
+          <option value='Coelho'>Coelho</option>
+          <option value='Passarinho'>Passarinho</option>
+          <option value='Sapo'>Sapo</option>
         </Select>
         <Select 
           variant='filled' 
@@ -228,8 +231,8 @@ export function CreatePostForm({ onSubmit, isSubmitting = false }: CreatePostFor
           onChange={handleRaceChange}
           value={race}
           >
-          <option value='option1'>Vira lata</option>
-          <option value='option2'>siamês</option>
+          <option value='Vira lata'>Vira lata</option>
+          <option value='siamês'>siamês</option>
           <option value='option2'>bonito</option>
           <option value='option2'>fofo</option>
           <option value='option2'>arroz</option>

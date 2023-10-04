@@ -8,6 +8,7 @@ interface PostSessionProps {
   posts: PostPreviewPros[];
   userName?: string;
   profilePicture?: string;
+  userUuid?: string;
 }
 
 export function PostSession({
@@ -18,6 +19,7 @@ export function PostSession({
   const handleRedirectToCreatePost = () => {
     window.location.href = '/posts/create';
   };
+
   return (
     <Box w="100vw" borderTop="2px solid" borderColor="blue.200" pt={10} mt={9}>
       <Flex direction="column" p={5} gap={3}>
@@ -28,9 +30,11 @@ export function PostSession({
               description={post.description}
               postUuid={post.postUuid}
               postCreatedAt={post.createdAt}
-              postImage={post.postPicture}
-              profilePicture={profilePicture}
-              userName={userName}
+              postImage={post.postPicture? post.postPicture : 'https://github.com/MatheusVict.png'}
+              profilePicture={post.userPicture}
+              userName={post.userName}
+              userUuid={post.userUuid ? post.userUuid : ''}
+              postUserUuid={post.postUserUuid ? post.postUserUuid : ''}
             />
           ))
         ) : (

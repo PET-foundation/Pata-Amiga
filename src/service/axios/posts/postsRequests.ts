@@ -5,7 +5,7 @@ import { PostResponse } from '../user/userResponses';
 const getAllPostsFromUser = async (
   userUuid: string,
   token: string,
-): Promise<PostResponse[]> => {
+) => {
   try {
     const { data, status } = await api().get(
       `/posts/user?userUuid=${userUuid}`,
@@ -17,7 +17,7 @@ const getAllPostsFromUser = async (
     );
     return data;
   } catch (error: any) {
-    console.log(`erro: ${error}`);
+    console.log(`erro getAllFromuser: ${error}`);
     return [];
   }
 };
@@ -47,7 +47,7 @@ const getAllPosts = async (): Promise<PostResponse[]> => {
   }
 }
 
-const getPostByUuid = async (postUuid: string, token): Promise<PostResponse> => {
+const getPostByUuid = async (postUuid: string, token: string): Promise<PostResponse> => {
   try {
     const {data} = await api().get<PostResponse>(`/posts/${postUuid}`, {
       headers: {
@@ -61,11 +61,39 @@ const getPostByUuid = async (postUuid: string, token): Promise<PostResponse> => 
   }
 }
 
+const deletePostByUuid = async(postUuid: string, token: string) => {
+  try {
+    const {status} = await api().delete(`/posts?uuid=${postUuid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  } catch (error: any) {
+    throw new Error('Erro ao deletar post');
+  }
+}
+
+const updatePostByUuid = async(postUuid: string, token: string, post: Omit<Post, 'Post'>) => {
+  try {
+    const {status} = await api().put(`/posts/${postUuid}`, post, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    return status;
+  } catch (error: any) {
+    throw new Error('Erro ao atualizar post');
+  }
+}
+
 const PostServieceMethods = {
   getAllPostsFromUser,
   createPost,
   getAllPosts,
-  getPostByUuid
+  getPostByUuid,
+  deletePostByUuid,
+  updatePostByUuid,
 };
 
 export default PostServieceMethods;

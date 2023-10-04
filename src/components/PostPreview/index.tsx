@@ -1,3 +1,4 @@
+import { areYouSureAlert } from '@/utils/alerts/areYouSureAlert';
 import {
   Center,
   Container,
@@ -6,8 +7,10 @@ import {
   Text,
   VStack,
   Link,
+  Button,
 } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+import { useSession } from 'next-auth/react';
+import {AiFillEdit, AiFillDelete} from 'react-icons/ai';
 
 interface PostPreviewProps {
   profilePicture?: string;
@@ -16,6 +19,8 @@ interface PostPreviewProps {
   description: string;
   postUuid: string;
   postImage?: string;
+  userUuid?: string;
+  postUserUuid?: string;
 }
 
 export function PostPreview({
@@ -25,12 +30,28 @@ export function PostPreview({
   description,
   postUuid,
   postImage,
+  userUuid,
+  postUserUuid,
+
 }: PostPreviewProps) {
+  const { data: session, status } = useSession();
+  console.log(`userUuid: ${userUuid} e postUserUuid: ${postUserUuid}`);
+
   const getPostCreatedAt = (postCreatedAt: string) => {
     const currentDate = new Date();
     const postDate = new Date(postCreatedAt);
     return currentDate.getHours() - postDate.getHours();
   };
+
+  const isUserOwnerOfPost = () => {
+    return userUuid === postUserUuid;
+  }
+
+  const onDeletePost = () => {
+    console.log(`deleting post ${postUuid}`);
+    areYouSureAlert(postUuid, session.user.token)
+  }
+
   return (
     <>
       <VStack>
@@ -55,6 +76,22 @@ export function PostPreview({
             <Text fontSize="lg">
               {postCreatedAt ? `${getPostCreatedAt(postCreatedAt)}` : 'sem informação'}h
             </Text>
+           {userUuid == postUserUuid && (
+              <Flex direction='row' ml={20} gap={5}>
+                <Button 
+                  as={Link}
+                  variant='solid' 
+                  color='blue.400' 
+                  leftIcon={<AiFillEdit/>}
+                  href={`/posts/${postUuid}/edit`}
+                  />
+                <Button 
+                  color='red.400' 
+                  leftIcon={<AiFillDelete/>}
+                  onClick={onDeletePost}
+                  />
+              </Flex>
+           )}
           </Flex>
         </Container>
         <Link href={`/posts/${postUuid}`} fontStyle="unset">

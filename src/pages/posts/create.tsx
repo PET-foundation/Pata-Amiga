@@ -7,10 +7,12 @@ import { alertTypes } from "@/utils/types/alertTypes";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 function Create() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: session, status } = useSession(); 
+  const { push } = useRouter();
 
 
   const handleCreatePost = async (post: Post) => {
@@ -30,6 +32,7 @@ function Create() {
       if(response) {
         popUplaert('post criado com sucesso', alertTypes.SUCCESS);
         console.log(postToCreate);
+        push('/profile');
       }
       
     } catch (error) {
