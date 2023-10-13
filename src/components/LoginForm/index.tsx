@@ -93,21 +93,24 @@ export default function LoginForm({ onLogin, isSubmitting }: LoginFormProps) {
          <Button
           width="300px"
           mb={3}
-          colorScheme="yellow"
+          colorScheme="blue"
           isLoading={isSubmitting}
           type="submit"
         >
           Entrar
         </Button>
         <Button
+          mb={4}
           width="300px"
-          colorScheme="yellow"
+          colorScheme='black' 
+          variant='outline'
           type="submit"
         >
           <Link  href="/register">
             Cadastrar
           </Link>
-        </Button>  
+        </Button>
+        <p>Esqueceu sua senha? <Link color="blue" href='/img/erro404.jpg'> Clique aqui</Link></p>
       </Flex>
       {/* <Button onClick={toggleColorMode}>Tloge</Button> */}
     </form>
