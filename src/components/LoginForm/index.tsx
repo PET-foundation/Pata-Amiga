@@ -104,7 +104,6 @@ export default function LoginForm({ onLogin, isSubmitting }: LoginFormProps) {
           width="300px"
           colorScheme='black' 
           variant='outline'
-          type="submit"
         >
           <Link  href="/register">
             Cadastrar
