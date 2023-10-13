@@ -16,19 +16,21 @@ function Register() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleRegister = async (
-    name: string,
-    email: string,
-    password: string,
-    phone: string,
-    whatsapp?: string,
-    instagram?: string,
-    facebook?: string,
+      name: string,
+      email: string,
+      password: string,
+      confirmPassword: string,
+      phone: string,
+      whatsapp?: string,
+      instagram?: string,
+      facebook?: string,
   ) => {
     setIsSubmitting(true);
     const userData: CredentialsRegister = {
       name,
       email,
       password,
+      confirmPassword,
       phone,
       whatsapp,
       instagram,

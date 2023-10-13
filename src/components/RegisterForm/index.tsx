@@ -45,7 +45,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isSubmitting })
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-    const [whatsappError, setWhatsappError] = useState(false);
+    const [phoneError, setPhoneError] = useState(false);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
@@ -108,9 +108,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isSubmitting })
         setConfirmPasswordError(confirmPassword === '');
     };
 
-    const onBlurWhatsappError = () => {
-        setWhatsappError(whatsapp === '');
-    };
+    const onBlurPhoneError = () => {
+      setPhoneError(phone === '');
+  };
 
     return (
         <form onSubmit={handleFormSubmit}>
@@ -179,12 +179,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isSubmitting })
               <Input
                     pr="4.5rem"
                     placeholder="Digite seu telefone/whatsapp"
-                    value={whatsapp}
-                    onChange={handleWhatsappChange}
-                    onBlur={onBlurWhatsappError}
+                    value={phone}
+                    onChange={handlePhoneChange}
+                    onBlur={onBlurPhoneError}
                     _hover={{bgColor: 'yellow.100'}}
                 />
-              {whatsappError && <FormErrorMessage>Phone is required.</FormErrorMessage>}
+              {phoneError && <FormErrorMessage>Phone is required.</FormErrorMessage>}
                 <InputRightElement width="4.5rem">
                     <AiOutlineWhatsApp/>
                 </InputRightElement>
