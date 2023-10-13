@@ -3,14 +3,14 @@ import {
   Flex,
   FormControl,
   FormErrorMessage,
-  FormLabel,
-  IconButton,
+  FormLabel, Heading,
+  IconButton, Image,
   Input,
   InputGroup,
-  InputRightElement,
+  InputRightElement, Link,
   useColorMode,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface LoginFormProps {
@@ -56,16 +56,18 @@ export default function LoginForm({ onLogin, isSubmitting }: LoginFormProps) {
 
   return (
     <form onSubmit={handleFormSubmit}>
+      <p> E-mail </p>
       <FormControl id="email" isRequired mb={4} isInvalid={emailError}>
         <Input
           type="email"
-          placeholder="Porfavor informe seu Email"
+          placeholder="Digite o seu e-mail"
           value={email}
           onChange={handleEmailChange}
           onBlur={handleEmailBlur}
         />
         {emailError && <FormErrorMessage>Email is required.</FormErrorMessage>}
       </FormControl>
+      <p> Senha </p>
       <FormControl id="password" isRequired mb={4} isInvalid={passwordError}>
         <InputGroup size="md">
           <Input
@@ -73,11 +75,11 @@ export default function LoginForm({ onLogin, isSubmitting }: LoginFormProps) {
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={handlePasswordChange}
-            placeholder="Enter password"
+            placeholder="Digite a sua senha"
             onBlur={handlePasswordBlur}
           />
           <InputRightElement width="4.5rem">
-            <IconButton
+            <IconButton 
               aria-label="Show password"
               h="1.75rem"
               size="sm"
@@ -87,16 +89,25 @@ export default function LoginForm({ onLogin, isSubmitting }: LoginFormProps) {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <Flex alignItems="center" justifyContent="center">
-        <Button
-          mt={4}
-          mb={4}
-          colorScheme="teal"
+      <Flex direction="column" alignItems="center" justifyContent="center">
+         <Button
+          width="300px"
+          mb={3}
+          colorScheme="yellow"
           isLoading={isSubmitting}
           type="submit"
         >
-          Login in
+          Entrar
         </Button>
+        <Button
+          width="300px"
+          colorScheme="yellow"
+          type="submit"
+        >
+          <Link  href="/register">
+            Cadastrar
+          </Link>
+        </Button>  
       </Flex>
       {/* <Button onClick={toggleColorMode}>Tloge</Button> */}
     </form>

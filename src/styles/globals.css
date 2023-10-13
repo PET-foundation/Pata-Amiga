@@ -27,3 +27,12 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+.loginPage {
+  background-image: url('/Pata-Amiga/public/img/background.png');
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  color: #fff; /* Cor do texto para garantir contraste com o fundo */
+  text-align: center;
+}

@@ -1,12 +1,15 @@
 import LoginForm from '@/components/LoginForm';
 import { popUplaert } from '@/utils/alerts/popUpAlert';
-import { Flex, Heading, Link, Text, useColorModeValue } from '@chakra-ui/react';
+import {background, Flex, Heading, Link, Text, useColorModeValue} from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { alertTypes } from '@/utils/types/alertTypes';
 import Head from 'next/head';
+import React from 'react';
+import { Image } from "@chakra-ui/react";
+
 
 function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,26 +46,32 @@ function Login() {
     }
   };
 
-  const formBackground = useColorModeValue('gray.100', 'gray.700');
+  const formBackground = useColorModeValue('yellow.50', 'yellow.700');
 
   return (
     <>
       <Head>
         <title>Login</title>
       </Head>
+      <Flex
+        width="100vw"
+        height="100vh"
+        alignItems="center"
+        justifyContent="center"
+        backgroundImage="url('img/background.png')"
+        backgroundSize="100% 100%"
+        backgroundPosition="center"
+        position="relative"
+      >
       <Flex height="100vh" alignItems="center" justifyContent="center">
-        <Flex direction="column" background={formBackground} p={12} rounded={6}>
-          <Heading mb={6}>Login</Heading>
+        <Flex  direction="column" background={formBackground} p={12} rounded={6}>
+          <Heading  mb={6}> <Image src='/img/imagemlogin.png' height="100px" alt="Logo" mx="auto" my="auto"  /> </Heading>
           <LoginForm onLogin={handleLogin} isSubmitting={isSubmitting} />
-          <Text mt={6} fontSize="sm">
-            Não tem uma conta?
-            <Link color="blue.500" href="/register">
-              Registre-se
-            </Link>
-          </Text>
         </Flex>
       </Flex>
+      </Flex>
     </>
+    
   );
 }
 
