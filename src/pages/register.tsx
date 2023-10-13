@@ -8,6 +8,7 @@ import { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { Image } from "@chakra-ui/react";
 
 function Register() {
   const { push } = useRouter();
@@ -58,14 +59,25 @@ function Register() {
   const formBackground = useColorModeValue('gray.100', 'gray.700');
   return (
     <>
+      <Flex
+        width="100vw"
+        height="100vh"
+        alignItems="center"
+        justifyContent="center"
+        backgroundImage="url('img/background.png')"
+        backgroundSize="100% 100%"
+        backgroundPosition="center"
+        position="relative"
+      >
       <Flex height="100vh" alignItems="center" justifyContent="center">
         <Flex direction="column" background={formBackground} p={12} rounded={6}>
-          <Heading mb={6}>Register</Heading>
+          <Heading mb={6}> <Image src='/img/imagemlogin.png' height="100px" alt="Logo" mx="auto" my="auto"/> </Heading>
           <RegisterForm
             onRegister={handleRegister}
             isSubmitting={isSubmitting}
           />
         </Flex>
+      </Flex>
       </Flex>
     </>
   );
