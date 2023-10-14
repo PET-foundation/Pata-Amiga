@@ -100,14 +100,14 @@ export default function LoginForm({ onLogin, isSubmitting }: LoginFormProps) {
           Entrar
         </Button>
         <Button
+        as={Link}
           mb={4}
           width="300px"
           colorScheme='black' 
           variant='outline'
+          href="/register"
         >
-          <Link  href="/register">
             Cadastrar
-          </Link>
         </Button>
         <p>Esqueceu sua senha? <Link color="blue" href='/img/erro404.jpg'> Clique aqui</Link></p>
       </Flex>
