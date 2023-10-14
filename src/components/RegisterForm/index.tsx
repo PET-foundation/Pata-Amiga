@@ -22,7 +22,6 @@ interface RegisterFormProps {
         name: string,
         email: string,
         password: string,
-        confirmPassword: string,
         phone: string,
         whatsapp: string,
         instagram?: string,
@@ -81,15 +80,28 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isSubmitting })
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onRegister(name, email, password, confirmPassword, phone, whatsapp, instagram, facebook);
-        if (password === confirmPassword) {
-            // As senhas coincidem, proceda com o registro
-            console.log('Usuário registrado!');
-            onRegister(name, email, password, confirmPassword, phone, whatsapp, instagram, facebook);
-        } else {
-            // As senhas não coincidem, exiba uma mensagem de erro
-            console.log('Erro: As senhas não coincidem');
+        if (password != confirmPassword) {
+          alert('As senhas não coincidem');
         }
+
+        console.log(`Inside form: ${JSON.stringify({
+          name,
+          email,
+          password,
+          phone,
+          whatsapp,
+          instagram,
+          facebook,     
+        })}`)
+        onRegister(
+          name,
+          email,
+          password,
+          phone,
+          whatsapp,
+          instagram,
+          facebook,
+      )
     };
 
     const onBlurNameError = () => {

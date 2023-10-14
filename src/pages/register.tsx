@@ -19,7 +19,6 @@ function Register() {
       name: string,
       email: string,
       password: string,
-      confirmPassword: string,
       phone: string,
       whatsapp?: string,
       instagram?: string,
@@ -30,7 +29,6 @@ function Register() {
       name,
       email,
       password,
-      confirmPassword,
       phone,
       whatsapp,
       instagram,
@@ -41,10 +39,21 @@ function Register() {
   };
 
   const submitUserToCreate = async (userData: CredentialsRegister) => {
-    console.log(userData);
+
+    const userToSave: CredentialsRegister = {
+      email: userData.email,
+      name: userData.name,
+      password: userData.password,
+      phone: userData.phone,
+      whatsapp: userData.phone,
+      facebook: userData.facebook,
+      instagram: userData.instagram,
+    }
+
+    console.log(JSON.stringify(userToSave));
 
     try {
-      const response = await UserServiceMethods.register(userData);
+      const response = await UserServiceMethods.register(userToSave);
 
       console.log(`response`, JSON.stringify(response));
       await redirectToLogin();
