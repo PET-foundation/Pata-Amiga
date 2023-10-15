@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Text, Center, Stack } from '@chakra-ui/react';
+import { popUplaert } from '@/utils/alerts/popUpAlert';
+import { alertTypes } from '@/utils/types/alertTypes';
 import {
-    FormControl,
-    FormErrorMessage,
-    Button,
-    Flex,
-    IconButton,
-    Input,
-    InputGroup,
-    InputLeftElement,
-    InputRightElement, Link,
+    FormControl, Stack, Text,
+    FormErrorMessage,  Alert, AlertIcon, AlertTitle, AlertDescription,
+    Button, Flex, IconButton, Input, InputGroup,
+    InputLeftElement, InputRightElement, Link,
 } from '@chakra-ui/react';
 import {
     AiOutlineWhatsApp,
@@ -81,27 +77,27 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isSubmitting })
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (password != confirmPassword) {
-          alert('As senhas não coincidem');
+          popUplaert('Senhas não são iguais', alertTypes.ERROR);
+        } else {
+          console.log(`Inside form: ${JSON.stringify({
+            name,
+            email,
+            password,
+            phone,
+            whatsapp,
+            instagram,
+            facebook,
+          })}`)
+          onRegister(
+            name,
+            email,
+            password,
+            phone,
+            whatsapp,
+            instagram,
+            facebook,
+          )
         }
-
-        console.log(`Inside form: ${JSON.stringify({
-          name,
-          email,
-          password,
-          phone,
-          whatsapp,
-          instagram,
-          facebook,     
-        })}`)
-        onRegister(
-          name,
-          email,
-          password,
-          phone,
-          whatsapp,
-          instagram,
-          facebook,
-      )
     };
 
     const onBlurNameError = () => {

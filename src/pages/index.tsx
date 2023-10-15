@@ -11,6 +11,8 @@ import {AiOutlineSend} from 'react-icons/ai'
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { PostSession } from '@/components/PostSession';
+import salci from '/public/img/kchorrosalci.png';
+import caramelo from '/public/img/caramelo.gif';
 
 interface HomeProps {
   userResponseAPI: userResponse;
@@ -71,41 +73,34 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
         userName="lasdfkj"
         onSearch={onSearch}
       />
-      <Flex 
-        direction="column" 
-        alignItems="center"  
-        ml={12}
-        mr={12}
-        mt={12}
-        h='25vh'
-        >
+      <Flex direction="row" align="center" justify="center" h="20vh">
+        <Image src={caramelo.src} h='180px' objectFit="contain" />
+        <Flex direction="row-reverse" align="center" justify="center" h="20vh" gap={60}>
+      <Image src={salci.src} h='180px' objectFit="contain" />
+      <Flex direction="column" alignItems="center" ml={350} mr={12} mt={7} h='18vh' >
         <Text fontSize="2xl" color="blue.400" fontWeight="bold">
-          Seja bem vindo de volta: {userResponseAPI.name}
+          Bem-vindo: {userResponseAPI.name}
         </Text>
-        <Text fontSize="2xl" color="yellow.400" fontWeight="bold">
-          Achou algum animal? Publique aqui!
-        </Text>
+
         <Flex direction="row" 
-        justifyContent="center"
-         alignItems='center'
-        w="100%" gap={12}
+        justifyContent="center" alignItems='center' w="150%" gap={2}
         onClick={() => push('/posts/create')}
         >
         <Textarea
-          placeholder="Escreva aqui"
+          placeholder="Achou algum animal? Publique aqui!"
           size="lg"
           resize="none"
-          bgColor="gray.100"
+          bgColor="blue.50"
           color='black'
           isReadOnly
           w="50%"
-          h="50%"
-          mt={4}
+          mt={2}
         />
-        <AiOutlineSend size={30}/>
+        <AiOutlineSend size={40}/>
         </Flex>
       </Flex>
-
+      </Flex>
+      </Flex>
       <Flex direction="column" alignItems="center" justifyContent="center">
         <PostSession 
           posts={posts.length > 0 ? convertPostsToPostPreview(posts) : postArrayEmpty}
