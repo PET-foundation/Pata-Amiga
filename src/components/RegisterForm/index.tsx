@@ -126,7 +126,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isSubmitting })
 
     return (
         <form onSubmit={handleFormSubmit}>
-          <Stack spacing={4} width="400px">
+          <Stack spacing={4} width="500px">
           <Flex direction="row" gap={5}>
           <FormControl  isRequired >
             <Text>Nome Completo<span style={{ color: 'red' }}> *</span></Text>
@@ -190,7 +190,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isSubmitting })
             <InputGroup size="md">
               <Input
                     pr="4.5rem"
-                    placeholder="Digite seu telefone/whatsapp"
+                    placeholder="(99) 99999-9999"
                     value={phone}
                     onChange={handlePhoneChange}
                     onBlur={onBlurPhoneError}

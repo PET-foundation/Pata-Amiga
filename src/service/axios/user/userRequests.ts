@@ -29,7 +29,7 @@ const register = async (
 
     return data;
   } catch (error: any) {
-    throw new LoginInvalidError(`Email já cadastrado`);
+    throw new LoginInvalidError(`erro na request ${error}`);
   }
 };
 
