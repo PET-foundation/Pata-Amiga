@@ -91,7 +91,7 @@ export default function LoginForm({ onLogin, isSubmitting }: LoginFormProps) {
       </FormControl>
       <Flex direction="column" alignItems="center" justifyContent="center">
          <Button
-          width="300px"
+          width="30vh"
           mb={3}
           colorScheme="blue"
           isLoading={isSubmitting}
@@ -102,7 +102,7 @@ export default function LoginForm({ onLogin, isSubmitting }: LoginFormProps) {
         <Button
         as={Link}
           mb={4}
-          width="300px"
+          width="30vh"
           colorScheme='black' 
           variant='outline'
           href="/register"

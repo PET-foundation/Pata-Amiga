@@ -78,12 +78,12 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
         <Flex direction="row-reverse" align="center" justify="center" h="20vh" gap={60}>
       <Image src={salci.src} h='180px' objectFit="contain" />
       <Flex direction="column" alignItems="center" ml={350} mr={12} mt={7} h='18vh' >
-        <Text fontSize="2xl" color="blue.400" fontWeight="bold">
+        <Text fontSize="2xl" color="blue.400" fontWeight="bold" mr={35}>
           Bem-vindo: {userResponseAPI.name}
         </Text>
 
         <Flex direction="row" 
-        justifyContent="center" alignItems='center' w="150%" gap={2}
+        justifyContent="center" alignItems='center' w="150%" gap={3}
         onClick={() => push('/posts/create')}
         >
         <Textarea
@@ -93,7 +93,7 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
           bgColor="blue.50"
           color='black'
           isReadOnly
-          w="50%"
+          w="34vh"
           mt={2}
         />
         <AiOutlineSend size={40}/>

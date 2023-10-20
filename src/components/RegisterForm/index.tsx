@@ -122,7 +122,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isSubmitting })
 
     return (
         <form onSubmit={handleFormSubmit}>
-          <Stack spacing={4} width="500px">
+          <Stack spacing={4} width="25vw">
           <Flex direction="row" gap={5}>
           <FormControl  isRequired >
             <Text>Nome Completo<span style={{ color: 'red' }}> *</span></Text>

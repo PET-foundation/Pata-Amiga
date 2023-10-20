@@ -25,7 +25,7 @@ export function TopMenu({ profilePicture, onSearch }: TopMenuProps) {
       <Flex alignItems="center" height="5vh">
         <Box>
           <Link href="/">
-            <Image boxSize="5vh" src={imagemlogin.src} alt="logo" h="50px" w="100px" />
+            <Image boxSize="5vh" src={imagemlogin.src} alt="logo" h="5vh" w="8vh" />
           </Link>
         </Box>
         <Spacer />

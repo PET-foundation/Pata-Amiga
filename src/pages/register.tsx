@@ -82,7 +82,7 @@ function Register() {
       >
       <Flex height="100vh" alignItems="center" justifyContent="center">
         <Flex direction="column" background={formBackground} p={12} rounded={6}>
-          <Heading mb={6}> <Image src='/img/imagemlogin.png' height="100px" alt="Logo" mx="auto" my="auto"/> </Heading>
+          <Heading mb={6}> <Image src='/img/imagemlogin.png' height="10vh" alt="Logo" mx="auto" my="auto"/> </Heading>
           <RegisterForm
             onRegister={handleRegister}
             isSubmitting={isSubmitting}

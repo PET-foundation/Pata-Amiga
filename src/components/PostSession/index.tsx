@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import { PostPreview } from '../PostPreview';
 import { Box, Button, Center, Flex, Image, Link, Text } from '@chakra-ui/react';
-import { PostPreviewPros } from '@/service/axios/user/userResponses';
 import notFoundPost from '/public/img/posts_not_found.png';
+import { PostPreviewPros, PostResponse, userResponse } from '@/service/axios/user/userResponses';
 
 interface PostSessionProps {
   posts: PostPreviewPros[];
@@ -30,7 +30,7 @@ export function PostSession({
               description={post.description}
               postUuid={post.postUuid}
               postCreatedAt={post.createdAt}
-              postImage={post.postPicture? post.postPicture : 'https://github.com/MatheusVict.png'}
+              postImage={post.postPicture? post.postPicture : ''}
               profilePicture={post.userPicture}
               userName={post.userName}
               userUuid={post.userUuid ? post.userUuid : ''}
@@ -58,7 +58,7 @@ export function PostSession({
               colorScheme="blue"
               size="lg"
               mt={5}
-              maxW="250px"
+              maxW="30vh"
               alignSelf="center"
               onClick={handleRedirectToCreatePost}
             >
