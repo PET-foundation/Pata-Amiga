@@ -21,7 +21,7 @@ interface TopMenuProps {
 
 export function TopMenu({ profilePicture, onSearch }: TopMenuProps) {
   return (
-    <Box bg="yellow.300" p={2} color="white" height="7vh">
+    <Box bg="yellow.300" p={2} color="white" height="6vh">
       <Flex alignItems="center" height="5vh">
         <Box>
           <Link href="/">
@@ -47,7 +47,7 @@ export function TopMenu({ profilePicture, onSearch }: TopMenuProps) {
         <Box>
           <Link href="/profile">
             <Flex align="center">
-            <Text marginRight="2" fontSize="1xl"
+            <Text marginRight="3" fontSize="1xl"
                   fontWeight="bold"
                   color="blue.500"
                   textAlign="center">Perfil</Text>

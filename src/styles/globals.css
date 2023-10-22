@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+.content {
+    width: 100vw;
+    height: 100vh;
+}
+
+@media screen and (min-width: 1024px) {
+    .content {
+        min-width: 1024px;
+        height: auto;
+        border-radius: 1rem;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .content {
+        max-width: 1023px;
+        height: auto;
+        border-radius: 1rem;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .content {
+        max-width: 767px;
+        height: auto;
+        border-radius: 1rem;
+    }
+}
+
+
+
+
+
+
+
+
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -27,12 +64,3 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
-.loginPage {
-  background-image: url('/Pata-Amiga/public/img/background.png');
-  background-size: cover;
-  background-position: center;
-  width: 100vw;
-  height: 100vh;
-  color: #fff; /* Cor do texto para garantir contraste com o fundo */
-  text-align: center;
-}

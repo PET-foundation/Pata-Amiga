@@ -21,7 +21,7 @@ export function PostSession({
   };
 
   return (
-    <Box w="100vw" borderTop="2px solid" borderColor="blue.200" pt={10}>
+    <Box w="100vw" borderTop="2px solid" borderColor="blue.200" pt={5}>
       <Flex direction="column" p={10} gap={2}>
         {posts.length > 0 ? (
           posts.map((post) => (

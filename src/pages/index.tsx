@@ -63,7 +63,7 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
 
   if (status === 'loading') return <p>Loading</p>;
   return (
-    <div>
+    <div class="content">
       <Head>
         <title>Home</title>
       </Head>

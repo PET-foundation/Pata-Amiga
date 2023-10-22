@@ -1,3 +1,5 @@
+import { TopMenu } from '@/components/TopMenu';
+import { PostPreviewPros, PostResponse, userResponse } from '@/service/axios/user/userResponses';
 import {
   Box,
   Button,
@@ -158,27 +160,16 @@ export function ProfileHeader({
 
   return (
     <>
+      <TopMenu  />
       <Flex direction="column" w="100%">
         <Box
           w="100%"
-          h="170px"
+          h="25vh"
           bg="blue.500"
           position="relative"
           _hover={isEditable && { opacity: '0.5' }}
           onClick={handleBoxClickImageBanner}
         >
-          {!isEditable && (
-            <Button
-              as={Link}
-              position="absolute"
-              mt="10"
-              ml="10"
-              colorScheme="blue"
-              variant="solid"
-              href="/"
-              rightIcon={<AiOutlineArrowLeft />}
-            ></Button>
-          ) }
           <Image
             src={userBanner ? userBannerImage : 'https://bit.ly/2Z4KKcF'}
             alt="Banner Image"
@@ -220,7 +211,7 @@ export function ProfileHeader({
             </Button>
           </Flex>
         ) : (
-          <Flex direction='column' gap={5} position="absolute"
+          <Flex direction='column' gap={2} position="absolute"
           mt="30vh"
           ml="85vw"
           mr='12'>
@@ -232,7 +223,7 @@ export function ProfileHeader({
             href="/profile/edit"
             rightIcon={<AiFillEdit />}
             >
-              editar perfil
+              Editar perfil
             </Button>
             <Button
               colorScheme="blue"
@@ -268,12 +259,12 @@ export function ProfileHeader({
             onChange={handleChangeProfilePicture}
           />
         </Box>
-        <Flex direction="column" mt="100" ml="30">
+        <Flex direction="column" mt="65" ml="10">
           {isEditable ? (
             <>
               <Input
                 isInvalid={userNameInput.length === 0}
-                placeholder='Aqui irá ficar o seu nome, que é o seu userName'
+                placeholder='Digite seu nome'
                 variant="flushed"
                 value={userNameInput}
                 onChange={(e) => setUserNameInput(e.target.value)}
@@ -294,7 +285,7 @@ export function ProfileHeader({
                 <InputLeftElement pointerEvents="none">@</InputLeftElement>
                 <Input
                   isReadOnly
-                  placeholder='Aqui irá ficar o seu @, que é o seu userName'
+                  placeholder='Escolha um nome para seu usuário'
                   variant="flushed"
                   value={makeUserAtSymbol(userNameInput).split('@').join('')}
                   width={userLocationInput.length > 50 ? 'sm' : 'md'}
@@ -303,22 +294,22 @@ export function ProfileHeader({
             </>
           ) : (
             <>
-              <Text fontSize="xs" fontWeight="bold" mt="1">
+              <Text fontSize="1xs" fontWeight="bold" mt="1">
                 {makeUserAtSymbol(userName)}
               </Text>
             </>
           )}
         </Flex>
-        <Flex direction="row" mt="10" ml="30"></Flex>
-        <Box width="500px">
-          <SimpleGrid columns={2} rowGap={0} columnGap={0}>
-            <Box height="80px" width="260px">
-              <Flex direction="row" mt="10" ml="10" gap={2}>
+        <Flex  direction="row" mt="10" ml="30"></Flex>
+        <Box  width="30vw" h='12vh'>
+          <SimpleGrid columns={2} columnGap={0}>
+            <Box  h="5vh" w='30vw'>
+              <Flex direction="row" ml="10" gap={2}>
                 <IoLocationSharp />
                 {isEditable ? (
                   <>
                     <Input
-                      placeholder='Aqui irá ficar a sua localização'
+                      placeholder='Digite sua localização'
                       variant="flushed"
                       value={userLocationInput}
                       onChange={(e) => setUserLocationInput(e.target.value)}
@@ -326,20 +317,27 @@ export function ProfileHeader({
                   </>
                 ) : (
                   <>
-                    <Text fontSize="lg">{userLocation}</Text>
+                    {userLocation ? (
+                      <Text fontSize="lg"                 
+                      >
+                        {userLocation}
+                      </Text>
+                    ) : (                  
+                    <Text fontSize="lg">{'Não defifnido'}</Text>
+                    )}
                   </>
                 )}
               </Flex>
             </Box>
-            <Box height="80px" width="400px">
-              <Flex direction="row" mt="10" ml="10" gap={2}>
+            <Box h="5vh" w='20vw' >
+              <Flex direction="row"  gap={2}>
                 <AiOutlineMail />
                 {isEditable ? (
                   <>
                     <Input
-                      placeholder='Aqui irá ficar o seu email'
+                      placeholder='Digite seu e-mail'
                       isInvalid={!isValidEmail(userEmailInput)}
-                      type="email"
+                      type="e-mail"
                       variant="flushed"
                       value={userEmailInput}
                       onChange={(e) => setUserEmailInput(e.target.value)}
@@ -354,13 +352,13 @@ export function ProfileHeader({
                 )}
               </Flex>
             </Box>
-            <Box height="80px" width="260px">
-              <Flex direction="row" mt="10" ml="10" gap={2}>
+            <Box h="10vh" w='20vw'>
+              <Flex direction="row" ml="10" gap={2}>
                 <AiFillInstagram />
                 {isEditable ? (
                   <>
                     <Input
-                      placeholder='Aqui irá ficar o seu instagram se você tiver'
+                      placeholder='Digite seu instagram'
                       variant="flushed"
                       value={userInstagramInput}
                       onChange={(e) => setUserInstagramInput(e.target.value)}
@@ -376,19 +374,19 @@ export function ProfileHeader({
                         {userInstagram}
                       </Link>
                     ) : (
-                      <Text fontSize="lg">{'usuário não tem instagram'}</Text>
+                      <Text fontSize="lg">{'Não definido'}</Text>
                     )}
                   </>
                 )}
               </Flex>
             </Box>
-            <Box height="80px" width="260px">
-              <Flex direction="row" mt="10" ml="10" gap={2}>
+            <Box h="10vh" w='30vw'>
+              <Flex direction="row" gap={2}>
                 <AiOutlineWhatsApp />
                 {isEditable ? (
                   <>
                     <Input
-                      placeholder='Aqui irá ficar o seu whatsapp se você tiver'
+                      placeholder='Digite seu Whatsapp'
                       variant="flushed"
                       value={userWhatsAppInput}
                       onChange={(e) => setUserWhatsAppInput(e.target.value)}
@@ -404,7 +402,7 @@ export function ProfileHeader({
                         {userWhatsApp}
                       </Link>
                     ) : (
-                      <Text fontSize="lg">{'usuário não tem whatsapp'}</Text>
+                      <Text fontSize="lg">{'Usuário não tem whatsapp'}</Text>
                     )}
                   </>
                 )}
