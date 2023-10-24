@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import {AiFillEdit, AiFillDelete} from 'react-icons/ai';
+import perfil from '/public/img/perfil.png';
 
 interface PostPreviewProps {
   profilePicture?: string;
@@ -67,7 +68,7 @@ export function PostPreview({
           <Flex direction="row" w="100vh" gap={8} alignItems="center">
             <Image
               src={
-                profilePicture ? profilePicture : ''
+                profilePicture ? profilePicture : perfil.src
               }
               alt="Banner Image"
               borderRadius="full"

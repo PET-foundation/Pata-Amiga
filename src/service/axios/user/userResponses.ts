@@ -37,7 +37,6 @@ export interface PostResponse {
   userPicture: string
   userName: string
   createdAt: string
-  updatedAt: string
 }
 
 export interface Info {

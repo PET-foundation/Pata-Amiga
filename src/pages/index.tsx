@@ -49,8 +49,8 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
         postUuid: post.uuid,
         dataPost: post.createdAt,
         location: post.location,
-        userName: userResponseAPI.name,
-        userPicture: userResponseAPI.profilePicture,
+        userName: post.userName,
+        userPicture: post.userPicture,
         userUuid: userResponseAPI.uuid,
         postUserUuid: post.userUuid,
       });
@@ -63,7 +63,7 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
 
   if (status === 'loading') return <p>Loading</p>;
   return (
-    <div class="content">
+    <div className="content">
       <Head>
         <title>Home</title>
       </Head>
@@ -74,9 +74,9 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
         onSearch={onSearch}
       />
       <Flex direction="row" align="center" justify="center" h="20vh">
-        <Image src={caramelo.src} h='180px' objectFit="contain" />
+        <Image src={caramelo.src} h='180px' objectFit="contain" alt="caramelo" />
         <Flex direction="row-reverse" align="center" justify="center" h="20vh" gap={60}>
-      <Image src={salci.src} h='180px' objectFit="contain" />
+      <Image src={salci.src} h='180px' objectFit="contain" alt="salcicha" />
       <Flex direction="column" alignItems="center" ml={350} mr={12} mt={7} h='18vh' >
         <Text fontSize="2xl" color="blue.400" fontWeight="bold" mr={35}>
           Bem-vindo: {userResponseAPI.name}
