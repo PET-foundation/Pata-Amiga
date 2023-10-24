@@ -160,7 +160,6 @@ export function ProfileHeader({
 
   return (
     <>
-      <TopMenu  />
       <Flex direction="column" w="100%">
         <Box
           w="100%"

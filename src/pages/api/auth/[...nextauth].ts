@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import type { CredentialsLogin } from '../../../utils/types/CredentialsLogin';
 import { api } from '@/service/axios/config/axios.config';
 import LoginInvalidError from '@/service/axios/config/erros/LoginInvalideError';
+import { loginResponse } from '@/service/axios/user/userResponses';
 
 export const authOptions = {
   providers: [
@@ -31,6 +32,9 @@ export const authOptions = {
 
           return {
             token: data.token,
+            id: "",
+            apiToken: "",
+            ...data
           };
         } else {
           return null;
