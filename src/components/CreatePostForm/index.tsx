@@ -81,8 +81,8 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
     setRace(e.target.value);
   };
 
-  const handleSexChange = (e: string) => {
-    setSex(e);
+  const handleSexChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSex(e.target.value);
   };
 
   const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -191,7 +191,9 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
             <Image 
               w='100vw'
               h='100vh'
-              src={image}/>
+              src={image}
+              alt='image input'
+              />
           ): (
             <>
               <Text
