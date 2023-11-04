@@ -47,6 +47,20 @@ const getUserTheirSelf = async (token: string): Promise<userResponse> => {
   }
 };
 
+const getUserByUuid = async (token: string, userUuid: string): Promise<userResponse> => {
+  try {
+    const { data, status } = await api().get(`/user/${userUuid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
+  } catch (error: any) {
+    throw new LoginInvalidError(`Erro ao buscar usuário`);
+  }
+};
+
 const updateUser = async (userUuid: string,token: string, data: Omit<CredentialsRegister, "password">): Promise<void> => {
   
   try {
@@ -66,7 +80,8 @@ const UserServiceMethods = {
   Login,
   register,
   getUserTheirSelf,
-  updateUser
+  updateUser,
+  getUserByUuid
 };
 
 export default UserServiceMethods;
