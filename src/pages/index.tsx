@@ -2,14 +2,13 @@ import { TopMenu } from '@/components/TopMenu';
 import PostServieceMethods from '@/service/axios/posts/postsRequests';
 import UserServiceMethods from '@/service/axios/user/userRequests';
 import { PostPreviewPros, PostResponse, userResponse } from '@/service/axios/user/userResponses';
-import { Link } from '@chakra-ui/next-js';
-import { Button, Flex, Image, Text, Textarea } from '@chakra-ui/react';
+import { Flex, Image, Text, Textarea } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { getSession, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import {AiOutlineSend} from 'react-icons/ai'
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PostSession } from '@/components/PostSession';
 import salci from '/public/img/kchorrosalci.png';
 import caramelo from '/public/img/caramelo.gif';
@@ -27,6 +26,7 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
   const [postsConverted, setPostConverted] = useState<PostResponse[]>([]);
   const [search, setSearch] = useState('');
 
+
   if (status === 'authenticated') {
     console.log(JSON.stringify(session));
   }
@@ -35,8 +35,8 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
 
   const onClick = () => {};
 
-  const onSearch = (search: string) => {
-    console.log(search);
+  const onSearch = (serachInput: string) => {
+    setSearch(serachInput);
   };
 
    const convertPostsToPostPreview = (posts: PostResponse[]) => {
@@ -58,10 +58,22 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
     console.log(`postPreview: ${JSON.stringify(postPreview)}`);
     return postPreview;
   };
+
+  useEffect(() =>{
+    const postsFiltered = posts.filter((post) => 
+      post.description.toLowerCase()
+      .includes(search.toLowerCase())
+    );
+    setPosts(postsFiltered);
+    if (search === '') {
+      setPosts(allPosts);
+    }
+  }, [search])
   
   const postArrayEmpty: PostPreviewPros[] = []
 
-  if (status === 'loading') return <p>Loading</p>;
+  if (status === 'loading') return <p>Loading</p>;   
+   
   return (
     <div className="content">
       <Head>
@@ -133,6 +145,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       userResponseAPI = response;
     const data = await PostServieceMethods.getAllPosts();
     allPosts = data;
+
   } catch (error) {
     console.log(error);
   }
