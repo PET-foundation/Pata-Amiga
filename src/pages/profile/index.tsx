@@ -7,7 +7,7 @@ import {
   PostResponse,
   userResponse,
 } from '@/service/axios/user/userResponses';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { getSession, signOut } from 'next-auth/react';
 import Head from 'next/head';
@@ -70,16 +70,44 @@ function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
           userName={userResponseAPI.name}
           userWhatsApp={userResponseAPI.contact.whatsapp}
         />
-        <PostSession
-          posts={
-            postsResponseAPI.length > 0
-              ? convertPostsToPostPreview(postsResponseAPI)
-              : posts
-          }
-          userName={userResponseAPI.name}
-          profilePicture={userResponseAPI.profilePicture}
-          userUuid={userResponseAPI.uuid}
-        />
+        <Tabs isFitted variant='enclosed'>
+          <TabList mb='1em'>
+            <Tab 
+            _selected={{ 
+              color: 'white', 
+              bg: 'blue.500' 
+            }}
+            >
+              Meus Posts
+            </Tab>
+            <Tab 
+            _selected={{ 
+              color: 'white', 
+              bg: 'blue.500' 
+              }}
+              >
+                Meus abrigos
+            </Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+            <PostSession
+              posts={
+                postsResponseAPI.length > 0
+                  ? convertPostsToPostPreview(postsResponseAPI)
+                  : posts
+              }
+              userName={userResponseAPI.name}
+              profilePicture={userResponseAPI.profilePicture}
+              userUuid={userResponseAPI.uuid}
+            />
+            </TabPanel>
+            <TabPanel>
+              <p>two!</p>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+       
       </Flex>
     </>
   );

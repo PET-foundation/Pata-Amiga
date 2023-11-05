@@ -53,7 +53,7 @@ function Create() {
     
     <Flex  alignItems="center" justifyContent="center">
     <Link href='/'>
-    <Image src={backpg.src} h='5vh' position='absolute' top='50' left='300'  alt='voltar' />
+      <Image src={backpg.src} h='5vh' position='absolute' top='50' left='300'  alt='voltar' />
     </Link>
       <Flex direction="column" p={12} rounded={6} w='40%'>
         <Heading mb={6}>Nova publicação</Heading>

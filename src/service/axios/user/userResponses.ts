@@ -65,3 +65,18 @@ export interface PostPreviewPros {
   userUuid?: string;
   postUserUuid?: string;
 }
+export interface ShelterResponse {
+  id: number
+  uuid: string
+  name: string
+  description: string
+  location: string
+  adoptionPolice: string
+  profilePicture: string
+  banner: string
+  contact: Contact
+  pixKey: string
+  createdAt: string
+  updatedAt: string
+}
+
