@@ -189,8 +189,8 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
         >
           {image ? (
             <Image 
-              w='100vw'
-              h='100vh'
+              w='10vw'
+              h='10vh'
               src={image}
               alt='image input'
               />
@@ -216,7 +216,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
         <Flex direction='row' gap={6} mt={2}>
         <Stack spacing={2} direction='row'>
         <FormControl>
-        <FormLabel >Qual espécie:</FormLabel>
+        <FormLabel >Espécie:</FormLabel>
         <Select 
           variant='outline' 
           placeholder='Nenhum' 
@@ -233,7 +233,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
         </FormControl>
         
         <FormControl>
-        <FormLabel >Qual raça:</FormLabel>
+        <FormLabel >Raça:</FormLabel>
         <Select 
           variant='outline' 
           placeholder='Nenhum' 
@@ -250,7 +250,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
         </FormControl>
 
         <FormControl>        
-          <FormLabel >Qual sexo:</FormLabel>
+          <FormLabel >Sexo:</FormLabel>
             <Select 
               variant='outline' 
               placeholder='Nenhum' 
@@ -264,7 +264,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
           </FormControl>
           
         <FormControl>
-        <FormLabel >Qual porte:</FormLabel>
+        <FormLabel >Porte:</FormLabel>
           <Select 
           variant='outline' 
           placeholder='Nenhum' 
@@ -273,8 +273,8 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
           value={size}
           >
             <option value='BIG'>Grande</option>
-            <option value='Médio'>Médio</option>
-            <option value='Pequeno'>Pequeno</option>
+            <option value='MEDIUM'>Médio</option>
+            <option value='SMALL'>Pequeno</option>
           </Select>    
         </FormControl>                  
         </Stack>
@@ -283,7 +283,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
         <Flex direction='row' gap={6} mt={2}>
         <Stack spacing={2} direction='row'>
         <FormControl>  
-        <FormLabel >Qual idade:</FormLabel> 
+        <FormLabel >Idade:</FormLabel> 
           <Input 
             placeholder='Idade'
             maxW="100%"
@@ -293,7 +293,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
         </FormControl>
              
         <FormControl>
-        <FormLabel >Qual peso:</FormLabel> 
+        <FormLabel >Peso:</FormLabel> 
           <Input 
             placeholder='Peso'
             maxW="100%"
@@ -312,7 +312,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
           onChange={handleCastratedChange}
           value={castrated.valueOf().toString()}
           >
-            <FormLabel>É castrado?</FormLabel>
+            <FormLabel>Castrado?</FormLabel>
               <Radio colorScheme='blue' value='true'>
                 Sim
               </Radio>
@@ -327,7 +327,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
           onChange={handleVaccinatedChange}
           value={vaccinated.valueOf().toString()}
           >
-            <FormLabel>É vecinado?</FormLabel>
+            <FormLabel>Vacinado?</FormLabel>
               <Radio colorScheme='blue' value='true'>
                 Sim
               </Radio>
@@ -342,7 +342,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
           onChange={handleWormedChange}
           value={wormed.valueOf().toString()}
           >
-            <FormLabel>É vermifungado?</FormLabel>
+            <FormLabel>Vermifungado?</FormLabel>
               <Radio colorScheme='blue' value='true'>
                 Sim
               </Radio>

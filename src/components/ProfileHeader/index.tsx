@@ -157,9 +157,16 @@ export function ProfileHeader({
     }
   };
 
-
+interface TopMenuProps {
+  profilePicture: string;
+  userName: string;
+  onClick: () => void;
+  onSearch: (search: string) => void;
+}
   return (
     <>
+    
+      <TopMenu/>
       <Flex direction="column" w="100%">
         <Box
           w="100%"
