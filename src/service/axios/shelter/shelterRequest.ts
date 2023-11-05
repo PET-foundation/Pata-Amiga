@@ -3,11 +3,13 @@ import { ShelterResponse } from "../user/userResponses"
 
 const getAllSheltersByUser = async (userUuid: string, token: string): Promise<ShelterResponse[]> => {
   try {
-    const { data } = await api().get<ShelterResponse[]>(`/shelter/user/${userUuid}`, {
+    console.log("Before call")
+    const { data, status } = await api().get(`/shelter/user/${userUuid}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
+    console.log(`SHELTERSSSSS in endpoint ${data} with status ${status}`)
     return data
   } catch (error: any) {
     throw new Error('Erro ao buscar abrigos')
@@ -16,7 +18,7 @@ const getAllSheltersByUser = async (userUuid: string, token: string): Promise<Sh
 
 const getAllShelters = async (token: string): Promise<ShelterResponse[]> => {
   try {
-    const { data } = await api().get<ShelterResponse[]>('shelter', {
+    const { data } = await api().get<ShelterResponse[]>('/shelter', {
       headers: {
         Authorization: `Bearer ${token}`,
       },

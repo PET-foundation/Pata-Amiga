@@ -1,6 +1,10 @@
 import { PostSession } from '@/components/PostSession';
 import { ProfileHeader } from '@/components/ProfileHeader';
+import { ShelterPreview } from '@/components/ShelterPreview';
+import { ShelterSession } from '@/components/ShelterSession';
 import PostServieceMethods from '@/service/axios/posts/postsRequests';
+import shelterServiceMethods from '@/service/axios/shelter/shelterRequest';
+import { ShelterResponse } from '@/service/axios/shelter/shelterResponse';
 import UserServiceMethods from '@/service/axios/user/userRequests';
 import {
   PostPreviewPros,
@@ -16,12 +20,25 @@ import { useState } from 'react';
 interface ProfileProps {
   userResponseAPI: userResponse;
   postsResponseAPI?: PostResponse[];
+  sheltersResponseAPI: ShelterResponse[];
 }
 
-function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
+interface ShelterPreview {
+  shelterName: string;
+  shelterDescription: string;
+  shelterPicture: string;
+  shelterBanner: string;
+  shelterAddress: string;
+  shelterUuid: string;
+  numberOfAnimals: number;
+}
 
-  console.log(JSON.stringify(postsResponseAPI));
-  console.log(userResponseAPI.uuid)
+
+function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: ProfileProps) {
+  const [shelterResponse, setShelterResponse] = useState<ShelterResponse[]>(sheltersResponseAPI);
+  const [userShelters, setUserShelters] = useState<ShelterPreview[]>([]);
+
+  console.log(`SHELTERESSSSS ${sheltersResponseAPI}`);
   
   const convertPostsToPostPreview = (posts: PostResponse[]) => {
     const postPreview: PostPreviewPros[] = [];
@@ -39,12 +56,27 @@ function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
         postUserUuid: post.userUuid,
       });
     });
-    console.log(`postPreview: ${postPreview}`);
     return postPreview;
   };
   if (postsResponseAPI.length > 0) {
     const userPosts = convertPostsToPostPreview(postsResponseAPI);
     console.log(userPosts);
+  }
+
+  const convertSheleterToShelterPreview = (shelters: ShelterResponse[]) => {
+    const shelterPreview: ShelterPreview[] = [];
+    shelters.map((shelter) => {
+      shelterPreview.push({
+        shelterAddress: shelter.location,
+        shelterBanner: shelter.banner,
+        shelterDescription: shelter.description,
+        shelterName: shelter.name,
+        shelterPicture: shelter.profilePicture,
+        shelterUuid: shelter.uuid,
+        numberOfAnimals: 10,
+      });
+    });
+    return shelterPreview;
   }
 
   const onDeletePost = (postUuid: string) => {
@@ -103,7 +135,10 @@ function Profile({ userResponseAPI, postsResponseAPI }: ProfileProps) {
             />
             </TabPanel>
             <TabPanel>
-              <p>two!</p>
+              <ShelterSession 
+               sheltersToPrewiew={setShelterResponse.length > 0 ? convertSheleterToShelterPreview(shelterResponse) : []} 
+            />
+              
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -127,20 +162,29 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
+  const token = session.user.token;
+
   let userResponseAPI: userResponse;
   let postsResponseAPI: PostResponse[];
+  let sheltersResponseAPI: ShelterResponse[];
 
   try {
     const userResponse = await UserServiceMethods.getUserTheirSelf(
-      session.user.token,
+      token,
     );
     userResponseAPI = userResponse;
+
     const post = await PostServieceMethods.getAllPostsFromUser(
       userResponseAPI.uuid,
-      session.user.token,
+      token,
     );
-
     postsResponseAPI = post;
+    console.log('Before shelters')
+
+    const shelters = await shelterServiceMethods.getAllSheltersByUser(userResponseAPI.uuid, token);
+    console.log(`shelters: ${shelters}`);
+    sheltersResponseAPI = shelters;
+    
   } catch (error) {
     console.log(error);
   }
@@ -150,6 +194,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       session,
       userResponseAPI: userResponseAPI,
       postsResponseAPI: postsResponseAPI,
+      sheltersResponseAPI: sheltersResponseAPI,
     },
   };
 };

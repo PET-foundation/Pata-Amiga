@@ -1,5 +1,5 @@
 import { TopMenu } from '@/components/TopMenu';
-import { PostPreviewPros, PostResponse, userResponse } from '@/service/axios/user/userResponses';
+import { PostPreviewPros, PostResponse, ShelterResponse, userResponse } from '@/service/axios/user/userResponses';
 import {
   Box,
   Button,
@@ -157,16 +157,8 @@ export function ProfileHeader({
     }
   };
 
-interface TopMenuProps {
-  profilePicture: string;
-  userName: string;
-  onClick: () => void;
-  onSearch: (search: string) => void;
-}
   return (
     <>
-    
-      <TopMenu/>
       <Flex direction="column" w="100%">
         <Box
           w="100%"

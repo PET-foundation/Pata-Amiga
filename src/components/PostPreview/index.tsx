@@ -42,6 +42,9 @@ export function PostPreview({
   const getPostCreatedAt = (postCreatedAt: string) => {
     const currentDate = new Date();
     const postDate = new Date(postCreatedAt);
+    if (currentDate.getHours() - postDate.getHours() < 0) {
+      return 24 - (postDate.getHours() - currentDate.getHours());
+    }
     return currentDate.getHours() - postDate.getHours();
   };
 
