@@ -22,7 +22,7 @@ export default function App({
   return (
     <ChakraProvider>
       <NextNProgress
-        color={'#f6e05e'}
+        color={'#0cbfdf'}
         startPosition={0.3}
         stopDelayMs={200}
         height={5}

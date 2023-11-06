@@ -1,5 +1,6 @@
 import { api } from "../config/axios.config"
 import { ShelterResponse } from "../user/userResponses"
+import { ShelterCreateRequest } from "./shelterResponse"
 
 const getAllSheltersByUser = async (userUuid: string, token: string): Promise<ShelterResponse[]> => {
   try {
@@ -29,9 +30,25 @@ const getAllShelters = async (token: string): Promise<ShelterResponse[]> => {
   }
 }
 
+const createShelter = async (shelter: ShelterCreateRequest, token: string): Promise<boolean> => {
+  try {
+    const { status } = await api().post('/shelter', shelter, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    if (status === 201) {
+      return true
+    }
+  } catch (error: any) {
+    throw new Error('Erro ao criar abrigo')
+  }
+}
+
 const shelterServiceMethods = {
   getAllSheltersByUser,
   getAllShelters,
+  createShelter
 }
 
 export default shelterServiceMethods

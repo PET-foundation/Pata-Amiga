@@ -51,13 +51,15 @@ export function ShelterSession({ sheltersToPrewiew }: ShelterSessionProps) {
           >
             Nenhum abrigo encontrado
           </Text>
-          <Button
+          <Button 
+            href='/shelter/create' 
+            as={Link}
+            fontStyle='unset'
             colorScheme="blue"
             size="lg"
             mt={5}
             maxW="30vh"
             alignSelf="center"
-            onClick={handleRedirectToCreateShelter}
           >
             🐾 Criar abrigo 🐾
           </Button>

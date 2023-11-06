@@ -19,3 +19,17 @@ interface Contact {
   instagram: string
   facebook: string
 }
+
+export interface ShelterCreateRequest {
+  name: string
+  description: string
+  location: string
+  profilePicture: string
+  banner: string
+  contact: Contact
+  pixKey: string
+  adoptionPolice: string
+  owners: string[]
+}
+
+

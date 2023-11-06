@@ -2,6 +2,7 @@ import { PostSession } from '@/components/PostSession';
 import { ProfileHeader } from '@/components/ProfileHeader';
 import { ShelterPreview } from '@/components/ShelterPreview';
 import { ShelterSession } from '@/components/ShelterSession';
+import { TopMenu } from '@/components/TopMenu';
 import PostServieceMethods from '@/service/axios/posts/postsRequests';
 import shelterServiceMethods from '@/service/axios/shelter/shelterRequest';
 import { ShelterResponse } from '@/service/axios/shelter/shelterResponse';
@@ -38,7 +39,7 @@ function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: Pro
   const [shelterResponse, setShelterResponse] = useState<ShelterResponse[]>(sheltersResponseAPI);
   const [userShelters, setUserShelters] = useState<ShelterPreview[]>([]);
 
-  console.log(`SHELTERESSSSS ${sheltersResponseAPI}`);
+  console.log(`SHELTERESSSSS ${JSON.stringify(sheltersResponseAPI[0])}`);
   
   const convertPostsToPostPreview = (posts: PostResponse[]) => {
     const postPreview: PostPreviewPros[] = [];
@@ -92,6 +93,12 @@ function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: Pro
       <Head>
         <title>Profile | {userResponseAPI.name}</title>
       </Head>
+      <TopMenu 
+        userName={userResponseAPI.name}
+        profilePicture={userResponseAPI.profilePicture}
+        onClick={() => {}}
+        onSearch={() => {}}
+      />
       <Flex direction="column">
         <ProfileHeader
           profilePicture={userResponseAPI.profilePicture}
