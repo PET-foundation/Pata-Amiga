@@ -1,4 +1,5 @@
 import { ShelterForm } from "@/components/ShelterForm";
+import { TopMenu } from "@/components/TopMenu";
 import shelterServiceMethods from "@/service/axios/shelter/shelterRequest";
 import { ShelterCreateRequest } from "@/service/axios/shelter/shelterResponse";
 import UserServiceMethods from "@/service/axios/user/userRequests";
@@ -59,6 +60,12 @@ function Create({ userResponseAPI }: CreateProps) {
     <Head>
       <title>Criar Abrigo</title>
     </Head>
+      <TopMenu 
+        profilePicture={userResponseAPI.profilePicture}
+        userName={userResponseAPI.name}
+        onClick={() => {}}
+        onSearch={() => {}}
+      />
       <Box
         display="flex"
         flexDirection="column"

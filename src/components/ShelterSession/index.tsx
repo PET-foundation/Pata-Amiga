@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { ShelterPreview } from '../ShelterPreview';
 import shelterNotFoundImage from '/public/img/posts_not_found.png'
 import { Button, Flex, Link, Text } from '@chakra-ui/react';
@@ -18,13 +19,33 @@ interface ShelterPreviewProps {
 }
 
 export function ShelterSession({ sheltersToPrewiew }: ShelterSessionProps) {
+  const router = useRouter()
   const handleRedirectToCreateShelter = () => {
-    window.location.href = '/shelter/create';
+    router.push('/shelter/create');
   };
   return (
     <>
       {sheltersToPrewiew.length > 0 ? (
       <>
+        <Flex 
+          direction='column' 
+          justifyContent='space-between' 
+          alignItems='center'
+          mb={10}
+          >
+          <Text fontSize='2xl' fontWeight='bold'>
+            Crie novos abrigos
+          </Text>
+          <Button
+            onClick={handleRedirectToCreateShelter}
+            colorScheme="blue"
+            size="lg"
+            mt={5}
+            maxW="30vh"
+            alignSelf="center">
+            🐾 Criar abrigo 🐾
+          </Button>
+        </Flex>
         {sheltersToPrewiew.map((shelter, index) => (
           <ShelterPreview 
           key={index}

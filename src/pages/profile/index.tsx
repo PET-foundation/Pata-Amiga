@@ -16,7 +16,7 @@ import { Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/r
 import { GetServerSideProps } from 'next';
 import { getSession, signOut } from 'next-auth/react';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ProfileProps {
   userResponseAPI: userResponse;
@@ -36,8 +36,10 @@ interface ShelterPreview {
 
 
 function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: ProfileProps) {
+  const [postsResponse, setPostsResponse] = useState<PostResponse[]>(postsResponseAPI);
   const [shelterResponse, setShelterResponse] = useState<ShelterResponse[]>(sheltersResponseAPI);
   const [userShelters, setUserShelters] = useState<ShelterPreview[]>([]);
+  const [search, setSearch] = useState('');
 
   console.log(`SHELTERESSSSS ${JSON.stringify(sheltersResponseAPI[0])}`);
   
@@ -87,6 +89,27 @@ function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: Pro
   const onEditProfile = () => {
     console.log('edit profile');
   };
+
+  useEffect(() => {
+    const shelterFiltered = shelterResponse.filter((shelter) => 
+      shelter.name.toLowerCase().includes(search.toLowerCase())
+    )
+
+    setShelterResponse(shelterFiltered);
+
+    const postsFiltered = postsResponse.filter((post) => 
+      post.description.toLowerCase().includes(search.toLowerCase())
+    );
+
+    setPostsResponse(postsFiltered);
+
+    if(search === '') {
+      setShelterResponse(sheltersResponseAPI);
+      setPostsResponse(postsResponseAPI);
+    }
+
+  },[search])
+  
   const posts: PostPreviewPros[] = [];
   return (
     <>
@@ -97,7 +120,7 @@ function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: Pro
         userName={userResponseAPI.name}
         profilePicture={userResponseAPI.profilePicture}
         onClick={() => {}}
-        onSearch={() => {}}
+        onSearch={setSearch}
       />
       <Flex direction="column">
         <ProfileHeader
@@ -133,7 +156,7 @@ function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: Pro
             <PostSession
               posts={
                 postsResponseAPI.length > 0
-                  ? convertPostsToPostPreview(postsResponseAPI)
+                  ? convertPostsToPostPreview(postsResponse)
                   : posts
               }
               userName={userResponseAPI.name}
