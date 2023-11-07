@@ -27,7 +27,12 @@ function CreatePost() {
         session.user.token,
       );
 
-      const response = await shelterServiceMethods.createPostForShelter(shelterUuid as string, token, post);
+      const postToCreate: Post = {
+        ...post,
+        userUuid: userResponse.uuid,
+      } 
+
+      const response = await shelterServiceMethods.createPostForShelter(shelterUuid as string, token, postToCreate);
       setIsSubmitting(false);
       if(response) {
         popUplaert('post criado com sucesso', alertTypes.SUCCESS);

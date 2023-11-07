@@ -78,5 +78,6 @@ export interface ShelterResponse {
   pixKey: string
   createdAt: string
   updatedAt: string
+  owners: string[]
 }
 

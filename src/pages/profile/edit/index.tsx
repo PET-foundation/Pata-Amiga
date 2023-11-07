@@ -6,6 +6,8 @@ import { alertTypes } from '@/utils/types/alertTypes';
 import { GetServerSideProps } from 'next';
 import { getSession, useSession } from 'next-auth/react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 interface EditProfileProps {
   userResponseAPI: userResponse;
@@ -13,6 +15,9 @@ interface EditProfileProps {
 
 function EditProfile({ userResponseAPI }: EditProfileProps) {
   const { data: session, status } = useSession();
+  const {push} = useRouter();
+
+  const [isUploading, setIsUploading] = useState(false);
 
  async function onSubmit(
   userName: string,
@@ -35,7 +40,11 @@ function EditProfile({ userResponseAPI }: EditProfileProps) {
     };
 
     try {
+      setIsUploading(true);
       await UserServiceMethods.updateUser(userResponseAPI.uuid, session.user.token, user);
+      setIsUploading(false);
+      popUplaert('Atualizado com sucesso', alertTypes.SUCCESS);
+      await push('/profile');
       console.log('Atualizado com sucesso');
     } catch (error) {
       popUplaert('Erro ao atualizar', alertTypes.ERROR)
@@ -59,6 +68,7 @@ function EditProfile({ userResponseAPI }: EditProfileProps) {
         userName={userResponseAPI.name}
         userWhatsApp={userResponseAPI.contact.whatsapp}
         onSubmit={onSubmit}
+        isLoading={isUploading}
       />
     </>
   );

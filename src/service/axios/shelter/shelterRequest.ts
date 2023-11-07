@@ -1,7 +1,8 @@
 import { Post } from "@/utils/types/CreatePost"
 import { api } from "../config/axios.config"
-import { ShelterResponse } from "../user/userResponses"
+import { PostResponse, ShelterResponse } from "../user/userResponses"
 import { ShelterCreateRequest } from "./shelterResponse"
+import _ from "lodash"
 
 const getAllSheltersByUser = async (userUuid: string, token: string): Promise<ShelterResponse[]> => {
   try {
@@ -75,12 +76,48 @@ const createPostForShelter = async (shelterUuid: string, token: string, post: Po
   }
 }
 
+const getAllPostsFromShelter = async (shelterUuid: string, token: string): Promise<PostResponse[]> => {
+  try {
+    const { data } = await api().get<PostResponse[]>(`/shelter/allPosts/${shelterUuid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return data
+  } catch (error: any) {
+    throw new Error('Erro ao buscar posts')
+  }
+
+}
+
+const updateShelter = async (
+  shelterUuid: string, 
+  token: string, shelter: 
+  ShelterCreateRequest
+): Promise<boolean> => {
+  const shelterWithoutOwner = _.omit(shelter, ['owners'])
+  try {
+    const { status } = await api().put(`/shelter/${shelterUuid}`, shelterWithoutOwner, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    if (status === 200) {
+      return true
+    }
+  } catch (error: any) {
+    throw new Error('Erro ao atualizar abrigo')
+  }
+}
+
 const shelterServiceMethods = {
   getAllSheltersByUser,
   getAllShelters,
   createShelter,
   getShelterByUuid,
-  createPostForShelter
+  createPostForShelter,
+  getAllPostsFromShelter,
+  updateShelter
 }
 
 export default shelterServiceMethods

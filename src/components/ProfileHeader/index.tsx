@@ -37,6 +37,7 @@ interface ProfileHeaderProps {
   userInstagram: string;
   userWhatsApp: string;
   isEditable?: boolean;
+  isLoading?: boolean;
   onSubmit?: (
     userName: string,
     profileImage: string,
@@ -58,6 +59,7 @@ export function ProfileHeader({
   userWhatsApp,
   isEditable = false,
   onSubmit,
+  isLoading = false,
 }: ProfileHeaderProps) {
   const { data: session, status } = useSession();
   const profileFileInputRef = useRef<HTMLInputElement>(null);
@@ -194,6 +196,7 @@ export function ProfileHeader({
               colorScheme="blue"
               variant="outline"
               rightIcon={<AiOutlineSave />}
+              isLoading={isLoading}
               onClick={updateUser}
             >
               Salvar perfil

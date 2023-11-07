@@ -21,11 +21,11 @@ interface TopMenuProps {
 
 export function TopMenu({ profilePicture, onSearch }: TopMenuProps) {
   return (
-    <Box bg="yellow.300" p={2} color="white" height="6vh">
+    <Box bg="yellow.300" p={2} color="white" height="8vh">
       <Flex alignItems="center" height="5vh">
         <Box>
           <Link href="/">
-            <Image boxSize="5vh" src={imagemlogin.src} alt="logo" h="5vh" w="8vh" />
+            <Image boxSize="5vh" src={imagemlogin.src} alt="logo" h="5vh" w="15vh" />
           </Link>
         </Box>
         <Spacer />

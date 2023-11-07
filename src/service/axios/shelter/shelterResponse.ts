@@ -11,6 +11,7 @@ export interface ShelterResponse {
   pixKey: string
   createdAt: string
   updatedAt: string
+  owners: string[]
 }
 
 interface Contact {
@@ -29,7 +30,7 @@ export interface ShelterCreateRequest {
   contact: Contact
   pixKey: string
   adoptionPolice: string
-  owners: string[]
+  owners?: string[]
 }
 
 
