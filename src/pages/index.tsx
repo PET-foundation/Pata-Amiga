@@ -2,7 +2,7 @@ import { TopMenu } from '@/components/TopMenu';
 import PostServieceMethods from '@/service/axios/posts/postsRequests';
 import UserServiceMethods from '@/service/axios/user/userRequests';
 import { PostPreviewPros, PostResponse, userResponse } from '@/service/axios/user/userResponses';
-import { Flex, Image, Text, Textarea } from '@chakra-ui/react';
+import { AbsoluteCenter, Box, Divider, Flex, Image, Text, Textarea } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { getSession, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
@@ -113,6 +113,12 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
       </Flex>
       </Flex>
       </Flex>
+      <Box position='relative' padding='10'>
+        <Divider colorScheme="blue" borderColor='red.100'/>
+        <AbsoluteCenter bg='white' px='4'>
+          Feed de Posts
+        </AbsoluteCenter>
+      </Box>
       <Flex direction="column" alignItems="center" justifyContent="center">
         <PostSession 
           posts={posts.length > 0 ? convertPostsToPostPreview(posts) : postArrayEmpty}

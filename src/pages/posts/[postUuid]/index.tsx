@@ -178,19 +178,17 @@ function GetPostByUuid({postResponseAPI, ownerOfPost}: GetPostByUuidProps) {
            
           </Box>
           </Flex>
-                    <AdoptionPreview 
-                      userOwnerImage={postResponseAPI.userPicture} 
-                      userOwnerName={postResponseAPI.userName}
-                      userContactInfo={{
-                        email: ownerOfPost.email,
-                        phone: ownerOfPost.contact.phone,
-                        whatsapp: ownerOfPost.contact.whatsapp,
-                        instagram: ownerOfPost.contact.instagram,
-                        facebook: ownerOfPost.contact.facebook
-                      }}
-                      mt={20}
-                      ml={20}
-                    />
+            <AdoptionPreview 
+              userOwnerImage={postResponseAPI.userPicture} 
+              userOwnerName={postResponseAPI.userName}
+              userContactInfo={{
+                email: ownerOfPost.email,
+                phone: ownerOfPost.contact.phone,
+                whatsapp: ownerOfPost.contact.whatsapp,
+                instagram: ownerOfPost.contact.instagram,
+                facebook: ownerOfPost.contact.facebook
+              }}
+            />
       </Flex>
     </>
   )

@@ -24,6 +24,8 @@ function PageView({shelterResponseAPI}: PageViewProps) {
         shelterPixQrCode={shelter.pixKey}
         shelterContact={shelter.contact}
         shelterLocation={shelter.location}
+        shelterAdoptionRules={shelter.adoptionPolice}
+        shelterDescription={shelter.description}
         />
     </>
   );
