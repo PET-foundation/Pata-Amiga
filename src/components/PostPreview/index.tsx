@@ -13,6 +13,7 @@ import {
 import { useSession } from 'next-auth/react';
 import {AiFillEdit, AiFillDelete} from 'react-icons/ai';
 import perfil from '/public/img/perfil.png';
+import nenhumkchorro from '/public/img/sadcata.jpg';
 
 interface PostPreviewProps {
   profilePicture?: string;
@@ -134,7 +135,7 @@ export function PostPreview({
                   alignItems="center"
                 >
                   <Image
-                    src={postImage ? postImage : 'https://bit.ly/2Z4KKcF'}
+                    src={postImage ? postImage : 'https://i.postimg.cc/prX195SW/nenhumkchorro.jpg'}
                     alt="Banner Image"
                     maxW="100%"
                     borderRadius={10}

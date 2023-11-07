@@ -8,14 +8,14 @@ import { Box, Flex, Heading, Link } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { Image, background} from "@chakra-ui/react";
+import { Image, background, Button} from "@chakra-ui/react";
 import backpg from '/public/img/backpg.png';
+import {FaPaw} from 'react-icons/fa';
 
 function Create() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: session, status } = useSession(); 
   const { push } = useRouter();
-
 
   const handleCreatePost = async (post: Post) => {
     try {
@@ -58,8 +58,8 @@ function Create() {
       <Flex direction="column" p={12} rounded={6} w='40%'>
         <Heading mb={6}>Nova publicação</Heading>
       <CreatePostForm onSubmit={handleCreatePost} />
+        </Flex>
       </Flex>
-    </Flex>
     </Box>
   );
 }

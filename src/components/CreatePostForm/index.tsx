@@ -7,6 +7,7 @@ import { useRef, useState } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import {FaPaw} from 'react-icons/fa';
 
+
 interface CreatePostFormProps {
   onSubmit?: (
     post: Post
@@ -382,7 +383,6 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
             </RadioGroup>
           </Stack>
         </Flex>
-       
         <Flex pt={6} justifyContent="center">
           <Button 
           type='submit'
@@ -390,7 +390,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
           colorScheme='blue'
           isLoading={isSubmittingState}
           >
-            Criar post
+            Finalizar
           </Button>
         </Flex>
       </form>
