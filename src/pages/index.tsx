@@ -1,8 +1,8 @@
 import { TopMenu } from '@/components/TopMenu';
 import PostServieceMethods from '@/service/axios/posts/postsRequests';
 import UserServiceMethods from '@/service/axios/user/userRequests';
-import { PostPreviewPros, PostResponse, userResponse } from '@/service/axios/user/userResponses';
-import { AbsoluteCenter, Box, Divider, Flex, Image, Text, Textarea } from '@chakra-ui/react';
+import { PostPreviewPros, PostResponse, ShelterResponse, userResponse } from '@/service/axios/user/userResponses';
+import { AbsoluteCenter, Box, Divider, Flex, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Textarea } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { getSession, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
@@ -12,26 +12,26 @@ import { useEffect, useState } from 'react';
 import { PostSession } from '@/components/PostSession';
 import salci from '/public/img/kchorrosalci.png';
 import caramelo from '/public/img/caramelo.gif';
+import { ShelterSession } from '@/components/ShelterSession';
+import shelterServiceMethods from '@/service/axios/shelter/shelterRequest';
+import { ShelterPreview } from './profile';
 
 interface HomeProps {
   userResponseAPI: userResponse;
   allPosts: PostResponse[];
+  sheltersResponse: ShelterResponse[];
 }
 
-export default function Home({ userResponseAPI, allPosts }: HomeProps) {
+export default function Home({ userResponseAPI, allPosts, sheltersResponse }: HomeProps) {
   const { data: session, status } = useSession();
   const { push } = useRouter();
 
   const [posts, setPosts] = useState<PostResponse[]>(allPosts);
+  const [sheltersAll, setSheltersAll] = useState<ShelterResponse[]>(sheltersResponse);
   const [postsConverted, setPostConverted] = useState<PostResponse[]>([]);
   const [search, setSearch] = useState('');
 
-
-  if (status === 'authenticated') {
-    console.log(JSON.stringify(session));
-  }
-
-  console.log(`profilePicture: ${userResponseAPI.profilePicture}`);
+  console.log(`SHELTERESSSSS ${JSON.stringify(sheltersResponse)}`);
 
   const onClick = () => {};
 
@@ -55,9 +55,24 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
         postUserUuid: post.userUuid,
       });
     });
-    console.log(`postPreview: ${JSON.stringify(postPreview)}`);
     return postPreview;
   };
+
+  const convertSheltersToShelterPreview = (shelters: ShelterResponse[]) => {
+    const shelterPreview: ShelterPreview[] = [];
+    shelters.map((shelter) => {
+      shelterPreview.push({
+        shelterName: shelter.name,
+        shelterUuid: shelter.uuid,
+        shelterPicture: shelter.profilePicture,
+        shelterAddress: shelter.location,
+        shelterDescription: shelter.description,
+        shelterBanner: shelter.banner,
+        numberOfAnimals: 10,
+      });
+    });
+    return shelterPreview;
+  }
 
   useEffect(() =>{
     const postsFiltered = posts.filter((post) => 
@@ -113,18 +128,41 @@ export default function Home({ userResponseAPI, allPosts }: HomeProps) {
       </Flex>
       </Flex>
       </Flex>
-      <Box position='relative' padding='10'>
-        <Divider colorScheme="blue" borderColor='red.100'/>
-        <AbsoluteCenter bg='white' px='4'>
-          Feed de Posts
-        </AbsoluteCenter>
-      </Box>
-      <Flex direction="column" alignItems="center" justifyContent="center">
-        <PostSession 
-          posts={posts.length > 0 ? convertPostsToPostPreview(posts) : postArrayEmpty}
-          key={posts[0]?.uuid}
-        />
-      </Flex>
+      <Tabs isFitted variant='enclosed' mt={17}>
+        <TabList mb='1em'>
+          <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Posts</Tab>
+          <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Abrigos</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+          <Box position='relative' padding='10'>
+            <Divider colorScheme="blue" borderColor='red.100'/>
+            <AbsoluteCenter bg='white' px='4'>
+              Feed de Posts
+            </AbsoluteCenter>
+          </Box>
+          <Flex direction="column" alignItems="center" justifyContent="center">
+            <PostSession 
+              posts={posts.length > 0 ? convertPostsToPostPreview(posts) : postArrayEmpty}
+              key={posts[0]?.uuid}
+            />
+          </Flex>
+          </TabPanel>
+          <TabPanel>
+          <Box position='relative' padding='10'>
+            <Divider colorScheme="blue" borderColor='red.100'/>
+            <AbsoluteCenter bg='white' px='4'>
+              Feed de Abrigos
+            </AbsoluteCenter>
+          </Box>
+          <ShelterSession 
+          sheltersToPrewiew={
+            sheltersAll.length > 0 ? convertSheltersToShelterPreview(sheltersAll) : []
+          }
+          />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </div>
   );
 }
@@ -143,6 +181,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   let userResponseAPI: userResponse;
   let allPosts: PostResponse[] = [];
+  let sheltersResponse: ShelterResponse[] = [];
 
   try {
     const response = await UserServiceMethods.getUserTheirSelf(
@@ -151,6 +190,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       userResponseAPI = response;
     const data = await PostServieceMethods.getAllPosts();
     allPosts = data;
+    const shelters = await shelterServiceMethods.getAllShelters(session.user.token);
+    sheltersResponse = shelters;
 
   } catch (error) {
     console.log(error);
@@ -161,6 +202,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       session,
       userResponseAPI,
       allPosts,
+      sheltersResponse,
     },
   };
 };

@@ -25,7 +25,7 @@ interface ProfileProps {
   sheltersResponseAPI: ShelterResponse[];
 }
 
-interface ShelterPreview {
+export interface ShelterPreview {
   shelterName: string;
   shelterDescription: string;
   shelterPicture: string;
