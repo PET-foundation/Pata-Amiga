@@ -4,10 +4,14 @@ import shelterServiceMethods from "@/service/axios/shelter/shelterRequest";
 import { ShelterCreateRequest } from "@/service/axios/shelter/shelterResponse";
 import UserServiceMethods from "@/service/axios/user/userRequests";
 import { userResponse } from "@/service/axios/user/userResponses";
+import { popUplaert } from "@/utils/alerts/popUpAlert";
+import { alertTypes } from "@/utils/types/alertTypes";
 import { Box, Heading } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { getSession, useSession } from "next-auth/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 interface CreateProps {
   userResponseAPI: userResponse;
@@ -15,6 +19,8 @@ interface CreateProps {
 
 function Create({ userResponseAPI }: CreateProps) {
   const { data: session, status } = useSession();
+  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const token = session?.user.token;
 
@@ -31,6 +37,7 @@ function Create({ userResponseAPI }: CreateProps) {
     shelterPixKey: string,
     shelterAdoptionRules: string,
   ) => {
+    setIsSubmitting(true);
     const shelter: ShelterCreateRequest = {
         adoptionPolice: shelterAdoptionRules,
         location: shelterAddress,
@@ -50,9 +57,15 @@ function Create({ userResponseAPI }: CreateProps) {
         ],
     }
 
-    const response = await shelterServiceMethods.createShelter(shelter, token);
-
-    console.log(`RESPONSE OF CREATE SHELTER: ${response}`);
+    shelterServiceMethods.createShelter(shelter, token).then(async () => {
+      setIsSubmitting(false);
+      popUplaert('Abrigo criado com sucesso!', alertTypes.SUCCESS)
+      await router.push('/profile');
+    }).catch((error) => {
+      console.log(error);
+      setIsSubmitting(false);
+      popUplaert('Erro ao criar abrigo, Imagem muito grande', alertTypes.ERROR)
+    });
   }
 
   return (
@@ -74,7 +87,10 @@ function Create({ userResponseAPI }: CreateProps) {
         height="100vh"
       >
         <Heading>Criar Abrigo</Heading>
-        <ShelterForm onSubmit={handleSubmit} />
+        <ShelterForm 
+          onSubmit={handleSubmit}
+          isLoading={isSubmitting}
+         />
       </Box>
     </>
   );

@@ -49,9 +49,11 @@ interface ShelterFormProps {
     shelterPixKey: string,
     shelterAdoptionRules: string,
   ) => void;
+
+  isLoading: boolean
 }
 
-export function ShelterForm({ onSubmit }: ShelterFormProps) {
+export function ShelterForm({ onSubmit, isLoading }: ShelterFormProps) {
   const [shelterName, setShelterName] = useState('');
   const [shelterDescription, setShelterDescription] = useState('');
   const [shelterAddress, setShelterAddress] = useState('');
@@ -474,6 +476,7 @@ export function ShelterForm({ onSubmit }: ShelterFormProps) {
             colorScheme='blue'
             mt={5}
             onClick={handleSubmit}
+            isLoading={isLoading}
           >
             Criar abrigo
           </Button>

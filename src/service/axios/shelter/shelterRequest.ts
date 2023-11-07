@@ -5,7 +5,7 @@ import { ShelterCreateRequest } from "./shelterResponse"
 const getAllSheltersByUser = async (userUuid: string, token: string): Promise<ShelterResponse[]> => {
   try {
     console.log("Before call")
-    const { data, status } = await api().get(`/shelter/user/${userUuid}`, {
+    const { data, status } = await api().get<ShelterResponse[]>(`/shelter/user/${userUuid}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -30,6 +30,20 @@ const getAllShelters = async (token: string): Promise<ShelterResponse[]> => {
   }
 }
 
+const getShelterByUuid = async (shelterUuid: string, token: string): Promise<ShelterResponse> => {
+  try {
+    const { data } = await api().get<ShelterResponse>(`/shelter/${shelterUuid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return data
+  } catch (error: any) {
+    throw new Error('Erro ao buscar abrigo')
+  }
+
+}
+
 const createShelter = async (shelter: ShelterCreateRequest, token: string): Promise<boolean> => {
   try {
     const { status } = await api().post('/shelter', shelter, {
@@ -48,7 +62,8 @@ const createShelter = async (shelter: ShelterCreateRequest, token: string): Prom
 const shelterServiceMethods = {
   getAllSheltersByUser,
   getAllShelters,
-  createShelter
+  createShelter,
+  getShelterByUuid
 }
 
 export default shelterServiceMethods

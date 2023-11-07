@@ -3,6 +3,7 @@ import { PostPreview } from '../PostPreview';
 import { Box, Button, Center, Flex, Image, Link, Text } from '@chakra-ui/react';
 import notFoundPost from '/public/img/posts_not_found.png';
 import { PostPreviewPros, PostResponse, userResponse } from '@/service/axios/user/userResponses';
+import { useRouter } from 'next/router';
 
 interface PostSessionProps {
   posts: PostPreviewPros[];
@@ -16,25 +17,26 @@ export function PostSession({
   profilePicture,
   userName,
 }: PostSessionProps) {
-  const handleRedirectToCreatePost = () => {
-    window.location.href = '/posts/create';
+  const router = useRouter();
+  const handleRedirectToCreatePost = async () => {
+    await router.push('/posts/create');
   };
 
   return (
-    <Box w="100vw"  pt={5}>
+    <Box w="100vw">
       <Flex direction="column" p={10} gap={2}>
         {posts.length > 0 ? (
-          posts.map((post) => (
-            <PostPreview
-              key={post.postUuid}
-              description={post.description}
-              postUuid={post.postUuid}
-              postCreatedAt={post.createdAt}
-              postImage={post.postPicture? post.postPicture : ''}
-              profilePicture={post.userPicture}
-              userName={post.userName}
-              userUuid={post.userUuid ? post.userUuid : ''}
-              postUserUuid={post.postUserUuid ? post.postUserUuid : ''}
+            posts.map((post) => (
+              <PostPreview
+                key={post.postUuid}
+                description={post.description}
+                postUuid={post.postUuid}
+                postCreatedAt={post.createdAt}
+                postImage={post.postPicture? post.postPicture : ''}
+                profilePicture={post.userPicture}
+                userName={post.userName}
+                userUuid={post.userUuid ? post.userUuid : ''}
+                postUserUuid={post.postUserUuid ? post.postUserUuid : ''}
             />
           ))
         ) : (

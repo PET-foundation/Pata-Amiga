@@ -12,10 +12,11 @@ import {
   PostResponse,
   userResponse,
 } from '@/service/axios/user/userResponses';
-import { Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Box, Button, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { getSession, signOut } from 'next-auth/react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 interface ProfileProps {
@@ -40,6 +41,8 @@ function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: Pro
   const [shelterResponse, setShelterResponse] = useState<ShelterResponse[]>(sheltersResponseAPI);
   const [userShelters, setUserShelters] = useState<ShelterPreview[]>([]);
   const [search, setSearch] = useState('');
+
+  const router = useRouter();
 
   console.log(`SHELTERESSSSS ${JSON.stringify(sheltersResponseAPI[0])}`);
   
@@ -82,8 +85,8 @@ function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: Pro
     return shelterPreview;
   }
 
-  const onDeletePost = (postUuid: string) => {
-    console.log(`deleting post ${postUuid}`);
+  const handleRedirectToCreatePost = async() => {
+    await router.push('/posts/create');
   }
 
   const onEditProfile = () => {
@@ -153,6 +156,25 @@ function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: Pro
           </TabList>
           <TabPanels>
             <TabPanel>
+            <Flex 
+              direction='column' 
+              justifyContent='space-between' 
+              alignItems='center'
+              mb={10}
+              >
+              <Text fontSize='2xl' fontWeight='bold'>
+                Crie novos Posts
+              </Text>
+              <Button
+                onClick={handleRedirectToCreatePost}
+                colorScheme="blue"
+                size="lg"
+                mt={5}
+                maxW="30vh"
+                alignSelf="center">
+                🐾 Criar Post 🐾
+              </Button>
+            </Flex>
             <PostSession
               posts={
                 postsResponseAPI.length > 0
@@ -166,7 +188,9 @@ function Profile({ userResponseAPI, postsResponseAPI, sheltersResponseAPI }: Pro
             </TabPanel>
             <TabPanel>
               <ShelterSession 
-               sheltersToPrewiew={setShelterResponse.length > 0 ? convertSheleterToShelterPreview(shelterResponse) : []} 
+               sheltersToPrewiew={setShelterResponse.length > 0 ? 
+                convertSheleterToShelterPreview(shelterResponse) : []
+              } 
             />
               
             </TabPanel>
