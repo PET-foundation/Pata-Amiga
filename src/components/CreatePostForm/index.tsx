@@ -2,10 +2,11 @@ import { PostResponse } from '@/service/axios/user/userResponses';
 import { popUplaert } from '@/utils/alerts/popUpAlert';
 import { Post } from '@/utils/types/CreatePost';
 import { alertTypes } from '@/utils/types/alertTypes';
-import { Box, Button, Flex, FormControl, Image, Input, Radio, RadioGroup, Select, Stack, Text, Textarea } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl, Image, Input, Radio, RadioGroup, Select, Stack, Text, Textarea, FormLabel } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import {FaPaw} from 'react-icons/fa';
+
 
 interface CreatePostFormProps {
   onSubmit?: (
@@ -81,8 +82,8 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
     setRace(e.target.value);
   };
 
-  const handleSexChange = (e: string) => {
-    setSex(e);
+  const handleSexChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSex(e.target.value);
   };
 
   const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,13 +154,13 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
           mb={4}
           >
           <Input 
-            placeholder="name"
+            placeholder="Nome do pet"
             onChange={handleNameChange}
             value={name}
           />
         </FormControl>
         <Textarea 
-          placeholder='Informe a descrição do animal, como onde foi encontrado, se tem alguma doença, se é dócil, etc.'
+          placeholder='Conte um pouco sobre o pet'
           size="sm"
           mb={4}
           onChange={handleDescriptionChange}
@@ -167,7 +168,7 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
         />
         <FormControl isRequired mb={4}>
           <Input 
-            placeholder='Informe a localização do animal'
+            placeholder='Informe a localização do pet'
             onChange={handleLocationChange}
             value={location}
           />
@@ -189,16 +190,18 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
         >
           {image ? (
             <Image 
-              w='100%'
-              h='100%'
-              src={image}/>
+              w='10vw'
+              h='10vh'
+              src={image}
+              alt='image input'
+              />
           ): (
             <>
               <Text
                 fontSize='xl'
                 fontWeight='bold'
                 >
-                Preview da Image
+                Adicionar foto do pet
               </Text>
               <AiOutlinePlusSquare size={50} />
             </>
@@ -210,11 +213,15 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
             onChange={handleChangeImage}
           />
         </Flex>
-        <Flex direction='row' gap={5} mt={2}>
+        
+        <Flex direction='row' gap={6} mt={2}>
+        <Stack spacing={2} direction='row'>
+        <FormControl>
+        <FormLabel >Espécie:</FormLabel>
         <Select 
-          variant='filled' 
-          placeholder='espécie' 
-          maxW="49%"
+          variant='outline' 
+          placeholder='Nenhum' 
+          maxW="100%"
           onChange={handleSpeciesChange}
           value={species}
         >
@@ -222,152 +229,168 @@ export function CreatePostForm({ onSubmit, isSubmitting = false, isEdit, postRes
           <option value='Cachorro'>Cachorro</option>
           <option value='Coelho'>Coelho</option>
           <option value='Passarinho'>Passarinho</option>
-          <option value='Sapo'>Sapo</option>
+          <option value='Cabrito'>Cabrito</option>
         </Select>
+        </FormControl>
+        
+        <FormControl>
+        <FormLabel >Raça:</FormLabel>
         <Select 
-          variant='filled' 
-          placeholder='raça' 
-          maxW="49%"
+          variant='outline' 
+          placeholder='Nenhum' 
+          maxW="100%"
           onChange={handleRaceChange}
           value={race}
           >
           <option value='Vira lata'>Vira lata</option>
-          <option value='siamês'>siamês</option>
-          <option value='option2'>bonito</option>
-          <option value='option2'>fofo</option>
-          <option value='option2'>arroz</option>
+          <option value='Pug'>Pug</option>
+          <option value='Siamês'>Siamês</option>
+          <option value='Persa'>Persa</option>
+          <option value='Não sei dizer'>Não sei dizer</option>
         </Select>
-        </Flex>
-        <Flex direction='row' gap={5} pt={4}>
-          <RadioGroup defaultValue='M' pt={2}
-            onChange={handleSexChange}
-            value={sex}
+        </FormControl>
+
+        <FormControl>        
+          <FormLabel >Sexo:</FormLabel>
+            <Select 
+              variant='outline' 
+              placeholder='Nenhum' 
+              maxW="100%"
+              onChange={handleSexChange}
+              value={sex}
+              >
+              <option value='Macho'>Macho</option>
+              <option value='Fêmea'>Fêmea</option>
+            </Select>
+          </FormControl>
+          
+        <FormControl>
+        <FormLabel >Porte:</FormLabel>
+          <Select 
+          variant='outline' 
+          placeholder='Nenhum' 
+          maxW="100%"
+          onChange={handleSizeChange}
+          value={size}
           >
-            <Stack spacing={5} direction='row'>
-              <Radio colorScheme='blue' value='M'>
-                Macho
-              </Radio>
-              <Radio colorScheme='pink' value='F'>
-                Femêa
-              </Radio>
-            </Stack>
-          </RadioGroup>
+            <option value='BIG'>Grande</option>
+            <option value='MEDIUM'>Médio</option>
+            <option value='SMALL'>Pequeno</option>
+          </Select>    
+        </FormControl>                  
+        </Stack>
+        </Flex>
+          
+        <Flex direction='row' gap={6} mt={2}>
+        <Stack spacing={2} direction='row'>
+        <FormControl>  
+        <FormLabel >Idade:</FormLabel> 
           <Input 
-            placeholder='idade. Ex.: 2 anos e 3 meses'
-            maxW="36%"
+            placeholder='Idade'
+            maxW="100%"
             onChange={handleAgeChange}
             value={age}
-          />
+          />      
+        </FormControl>
+             
+        <FormControl>
+        <FormLabel >Peso:</FormLabel> 
           <Input 
-            placeholder='peso. Ex.: 2kg e 300g'
-            maxW="36%"
+            placeholder='Peso'
+            maxW="100%"
             onChange={handleWeightChange}
             value={weight}
           />
-        </Flex>
-        <Flex direction='row' gap={6} pt={4}>
-        <RadioGroup 
+        </FormControl>  
+        </Stack>  
+        </Flex>  
+
+        <Flex direction='row' gap={6} pt={2}>
+        <Stack spacing={2} direction='row'>
+        <RadioGroup
           defaultValue='false' 
           pt={2}
           onChange={handleCastratedChange}
           value={castrated.valueOf().toString()}
           >
-            <Text>É castrado?</Text>
-            <Stack spacing={5} direction='row'>
+            <FormLabel>Castrado?</FormLabel>
               <Radio colorScheme='blue' value='true'>
                 Sim
               </Radio>
               <Radio colorScheme='red' value='false'>
                 Não
               </Radio>
-            </Stack>
-          </RadioGroup>
+            </RadioGroup>
+          
           <RadioGroup 
           defaultValue='false' 
           pt={2}
           onChange={handleVaccinatedChange}
           value={vaccinated.valueOf().toString()}
           >
-            <Text>É vecinado?</Text>
-            <Stack spacing={5} direction='row'>
+            <FormLabel>Vacinado?</FormLabel>
               <Radio colorScheme='blue' value='true'>
                 Sim
               </Radio>
               <Radio colorScheme='red' value='false'>
                 Não
               </Radio>
-            </Stack>
           </RadioGroup>
+          
           <RadioGroup 
           defaultValue='false' 
           pt={2}
           onChange={handleWormedChange}
           value={wormed.valueOf().toString()}
           >
-            <Text>É vermifungado?</Text>
-            <Stack spacing={5} direction='row'>
+            <FormLabel>Vermifungado?</FormLabel>
               <Radio colorScheme='blue' value='true'>
                 Sim
               </Radio>
               <Radio colorScheme='red' value='false'>
                 Não
               </Radio>
-            </Stack>
           </RadioGroup>
+          
           <RadioGroup 
           defaultValue='false' 
           pt={2}
           onChange={handlePedigreeChange}
           value={pedigree.valueOf().toString()}
           >
-            <Text>Tem pedigree?</Text>
-            <Stack spacing={5} direction='row'>
+            <FormLabel>Tem pedigree?</FormLabel>
               <Radio colorScheme='blue' value='true'>
                 Sim
               </Radio>
               <Radio colorScheme='red' value='false'>
                 Não
               </Radio>
-            </Stack>
           </RadioGroup>
+          
           <RadioGroup 
           defaultValue='false' 
           pt={2}
           onChange={handleSpecialCareChange}
           value={specialCare.valueOf().toString()}
           >
-            <Text>Cuidados especiais?</Text>
-            <Stack spacing={5} direction='row'>
+            <FormLabel>Cuidados especiais?</FormLabel>
               <Radio colorScheme='blue' value='true'>
                 Sim
               </Radio>
               <Radio colorScheme='red' value='false'>
                 Não
               </Radio>
-            </Stack>
-          </RadioGroup>
+            </RadioGroup>
+          </Stack>
         </Flex>
-        <Flex direction='row' gap={5} pt={4}>
-        <Select 
-        variant='filled' 
-        placeholder='porte' 
-        maxW="60%"
-        onChange={handleSizeChange}
-        value={size}
-        >
-          <option value='BIG'>Grande</option>
-          <option value='SMALL'>pequeno</option>
-          <option value='MEDIUM'>médio</option>
-        </Select>
-        </Flex>
-        <Flex pt={4} justifyContent="center">
+        <Flex pt={6} justifyContent="center">
           <Button 
           type='submit'
           rightIcon={<FaPaw/>}
-          colorScheme='messenger'
+          colorScheme='blue'
           isLoading={isSubmittingState}
           >
-            Criar post
+            Finalizar
           </Button>
         </Flex>
       </form>

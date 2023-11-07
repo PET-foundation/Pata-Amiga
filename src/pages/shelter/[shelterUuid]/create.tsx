@@ -1,21 +1,24 @@
 import { CreatePostForm } from "@/components/CreatePostForm";
-import PostServieceMethods from "@/service/axios/posts/postsRequests";
+import shelterServiceMethods from "@/service/axios/shelter/shelterRequest";
 import UserServiceMethods from "@/service/axios/user/userRequests";
-import { popUplaert } from "@/utils/alerts/popUpAlert";
 import { Post } from "@/utils/types/CreatePost";
-import { alertTypes } from "@/utils/types/alertTypes";
-import { Box, Flex, Heading, Link } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { Box, Flex, Heading, Image } from "@chakra-ui/react";
+import { getSession, useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { Image, background, Button} from "@chakra-ui/react";
+import { useState } from "react";
 import backpg from '/public/img/backpg.png';
-import {FaPaw} from 'react-icons/fa';
+import { alertTypes } from "@/utils/types/alertTypes";
+import { popUplaert } from "@/utils/alerts/popUpAlert";
+import { GetServerSideProps } from "next";
 
-function Create() {
+function CreatePost() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: session, status } = useSession(); 
-  const { push } = useRouter();
+  const token = session?.user.token;
+  const { push, query } = useRouter();
+
+  const {shelterUuid} = query;
 
   const handleCreatePost = async (post: Post) => {
     try {
@@ -26,15 +29,14 @@ function Create() {
 
       const postToCreate: Post = {
         ...post,
-        userUuid: userResponse.uuid
-      }
+        userUuid: userResponse.uuid,
+      } 
 
-      const response = await PostServieceMethods.createPost(postToCreate, session.user.token);
+      const response = await shelterServiceMethods.createPostForShelter(shelterUuid as string, token, postToCreate);
       setIsSubmitting(false);
       if(response) {
         popUplaert('post criado com sucesso', alertTypes.SUCCESS);
-        console.log(postToCreate);
-        push('/profile');
+        push(`/shelter/${shelterUuid}`);
       }
       
     } catch (error) {
@@ -64,4 +66,23 @@ function Create() {
   );
 }
 
-export default Create;
+export default CreatePost;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+};

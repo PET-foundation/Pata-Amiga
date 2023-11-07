@@ -8,6 +8,7 @@ import { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { Image } from "@chakra-ui/react";
 
 function Register() {
   const { push } = useRouter();
@@ -15,13 +16,13 @@ function Register() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleRegister = async (
-    name: string,
-    email: string,
-    password: string,
-    phone: string,
-    whatsapp?: string,
-    instagram?: string,
-    facebook?: string,
+      name: string,
+      email: string,
+      password: string,
+      phone: string,
+      whatsapp?: string,
+      instagram?: string,
+      facebook?: string,
   ) => {
     setIsSubmitting(true);
     const userData: CredentialsRegister = {
@@ -38,10 +39,21 @@ function Register() {
   };
 
   const submitUserToCreate = async (userData: CredentialsRegister) => {
-    console.log(userData);
+
+    const userToSave: CredentialsRegister = {
+      email: userData.email,
+      name: userData.name,
+      password: userData.password,
+      phone: userData.phone,
+      whatsapp: userData.phone,
+      facebook: userData.facebook,
+      instagram: userData.instagram,
+    }
+
+    console.log(JSON.stringify(userToSave));
 
     try {
-      const response = await UserServiceMethods.register(userData);
+      const response = await UserServiceMethods.register(userToSave);
 
       console.log(`response`, JSON.stringify(response));
       await redirectToLogin();
@@ -58,14 +70,25 @@ function Register() {
   const formBackground = useColorModeValue('gray.100', 'gray.700');
   return (
     <>
+      <Flex
+        width="100vw"
+        height="100vh"
+        alignItems="center"
+        justifyContent="center"
+        backgroundImage="url('img/background.png')"
+        backgroundSize="100% 100%"
+        backgroundPosition="center"
+        position="relative"
+      >
       <Flex height="100vh" alignItems="center" justifyContent="center">
         <Flex direction="column" background={formBackground} p={12} rounded={6}>
-          <Heading mb={6}>Register</Heading>
+          <Heading mb={6}> <Image src='/img/imagemlogin.png' height="10vh" alt="Logo" mx="auto" my="auto"/> </Heading>
           <RegisterForm
             onRegister={handleRegister}
             isSubmitting={isSubmitting}
           />
         </Flex>
+      </Flex>
       </Flex>
     </>
   );

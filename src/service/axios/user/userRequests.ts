@@ -29,13 +29,27 @@ const register = async (
 
     return data;
   } catch (error: any) {
-    throw new LoginInvalidError(`Email já cadastrado`);
+    throw new LoginInvalidError(`erro na request ${error}`);
   }
 };
 
 const getUserTheirSelf = async (token: string): Promise<userResponse> => {
   try {
     const { data, status } = await api().get('/user/themselves', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
+  } catch (error: any) {
+    throw new LoginInvalidError(`Erro ao buscar usuário`);
+  }
+};
+
+const getUserByUuid = async (token: string, userUuid: string): Promise<userResponse> => {
+  try {
+    const { data, status } = await api().get(`/user/${userUuid}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -66,7 +80,8 @@ const UserServiceMethods = {
   Login,
   register,
   getUserTheirSelf,
-  updateUser
+  updateUser,
+  getUserByUuid
 };
 
 export default UserServiceMethods;

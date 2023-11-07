@@ -4,25 +4,25 @@ import Swal from "sweetalert2"
 export const areYouSureAlert = (postUuid: string, token: string) => {
   Swal.fire({
     title: 'Você tem certeza disso?',
-    text: "You won't be able to revert this!",
+    text: "Clique em 'SIM' para confirmar!",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: 'Sim'
   }).then((result) => {
     if (result.isConfirmed) {
       PostServieceMethods.deletePostByUuid(postUuid, token)
       .then(() => {
         Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
+          'Excluído!',
+          'Seu poste foi excluído!',
           'success'
         )
       }).catch((error) => {
         Swal.fire(
           `Error! ${error}`,
-          'Your file has not been deleted.',
+          'Seu poste não foi excluído!.',
           'error'
         )
       })

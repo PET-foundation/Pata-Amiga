@@ -9,6 +9,8 @@ import { GetServerSideProps } from "next";
 import { getSession, useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from 'next/router';
+import { Image, background, Box, Link} from "@chakra-ui/react";
+import backpg from '/public/img/backpg.png';
 
 interface EditProps {
   postResponseAPI: PostResponse;
@@ -34,9 +36,17 @@ function Edit({postResponseAPI}: EditProps) {
   }
 
   return (
+      <Box backgroundImage="url('/img/background-render.png')"
+           backgroundSize="100% 100%"
+           backgroundPosition="center"
+           width="100vw"
+           height="100vh">
     <Flex alignItems="center" justifyContent="center" >
-      <Flex direction="column" p={12} rounded={6} w='55%'>
-        <Heading mb={6}>Criar Post</Heading>
+    <Link href='/'>
+      <Image src={backpg.src} h='5vh' position='absolute' top='50' left='300'  alt='voltar' />
+    </Link>
+      <Flex direction="column" p={12} rounded={6} w='40vw'>
+        <Heading mb={6}>Edição do Post</Heading>
         <CreatePostForm 
           onSubmit={handleUpdatePost} 
           isEdit={true}
@@ -44,6 +54,7 @@ function Edit({postResponseAPI}: EditProps) {
           />
       </Flex>
     </Flex>
+    </Box>
   );
 }
 

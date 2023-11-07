@@ -1,4 +1,5 @@
 import { areYouSureAlert } from '@/utils/alerts/areYouSureAlert';
+import { PostPreviewPros, PostResponse, userResponse } from '@/service/axios/user/userResponses';
 import {
   Center,
   Container,
@@ -11,6 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import {AiFillEdit, AiFillDelete} from 'react-icons/ai';
+import perfil from '/public/img/perfil.png';
+import nenhumkchorro from '/public/img/sadcata.jpg';
 
 interface PostPreviewProps {
   profilePicture?: string;
@@ -40,6 +43,9 @@ export function PostPreview({
   const getPostCreatedAt = (postCreatedAt: string) => {
     const currentDate = new Date();
     const postDate = new Date(postCreatedAt);
+    if (currentDate.getHours() - postDate.getHours() < 0) {
+      return 24 - (postDate.getHours() - currentDate.getHours());
+    }
     return currentDate.getHours() - postDate.getHours();
   };
 
@@ -60,33 +66,34 @@ export function PostPreview({
           borderTopRadius={10}
           bg="yellow.300"
           color="black"
-          border="5px solid"
+          border="0.1vh solid"
           borderColor="black"
         >
-          <Flex direction="row" w="100%" gap={8} alignItems="center">
+          <Flex direction="row" w="100vh" gap={8} alignItems="center">
             <Image
               src={
-                profilePicture ? profilePicture : 'https://bit.ly/dan-abramov'
+                profilePicture ? profilePicture : perfil.src
               }
               alt="Banner Image"
               borderRadius="full"
-              boxSize="8vh"
+              boxSize="5vh"
             />
             <Text fontSize="lg">@{userName}</Text>
             <Text fontSize="lg">
               {postCreatedAt ? `${getPostCreatedAt(postCreatedAt)}` : 'sem informação'}h
             </Text>
            {userUuid == postUserUuid && (
-              <Flex direction='row' ml={20} gap={5}>
+              <Flex direction='row' ml={150} gap={5}>
                 <Button 
                   as={Link}
-                  variant='solid' 
-                  color='blue.400' 
+                  variant='' 
+                  color='blue.40' 
                   leftIcon={<AiFillEdit/>}
                   href={`/posts/${postUuid}/edit`}
                   />
                 <Button 
                   color='red.400' 
+                  variant=''
                   leftIcon={<AiFillDelete/>}
                   onClick={onDeletePost}
                   />
@@ -99,12 +106,12 @@ export function PostPreview({
             maxW="container.sm"
             bg="white"
             color="black"
-            border="5px solid"
+            border="0.1vh solid"
             borderColor="black"
-          >
+           >
             <Flex
               direction="column"
-              w="100%"
+              w="100"
               gap={8}
               alignItems="center"
               paddingTop="3"
@@ -119,22 +126,20 @@ export function PostPreview({
               >
                 {description}
               </Text>
-                ver mais...
               <Center borderRadius={10}>
                 <Flex
                   direction="row"
-                  w="100%"
+                  w="100"
                   bg="blue.500"
                   gap={8}
                   alignItems="center"
                 >
                   <Image
-                    src={postImage ? postImage : 'https://bit.ly/2Z4KKcF'}
+                    src={postImage ? postImage : 'https://i.postimg.cc/prX195SW/nenhumkchorro.jpg'}
                     alt="Banner Image"
-                    maxH="100%"
                     maxW="100%"
                     borderRadius={10}
-                    border="5px solid"
+                    border="0.1vh solid"
                     borderColor="black"
                   />
                 </Flex>

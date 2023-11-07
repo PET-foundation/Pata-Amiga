@@ -3,6 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import type { AppProps } from 'next/app';
 import { extendTheme } from '@chakra-ui/react';
 import { SessionProvider } from 'next-auth/react';
+import NextNProgress from 'nextjs-progressbar';
 
 const colors = {
   brand: {
@@ -20,6 +21,13 @@ export default function App({
 }: AppProps) {
   return (
     <ChakraProvider>
+      <NextNProgress
+        color={'#0cbfdf'}
+        startPosition={0.3}
+        stopDelayMs={200}
+        height={5}
+        showOnShallow
+      />
       <SessionProvider session={session}>
         <Component {...pageProps} />
       </SessionProvider>
