@@ -60,13 +60,21 @@ function GetPostByUuid({postResponseAPI, ownerOfPost}: GetPostByUuidProps) {
           <Flex
             justifyContent="center"
             alignItems="center"
-            height="100vh" // Defina a altura da tela inteira
+            height="100%" 
+            width="100vw"
             mt={10}
           >
-            <Box >
+            <Box 
+            maxW='100%'
+            >
               <Image 
-                src={postResponseAPI.picture ? postResponseAPI.picture : 'https://i.postimg.cc/prX195SW/nenhumkchorro.jpg'} 
+                src={postResponseAPI.picture ? 
+                  postResponseAPI.picture : 'https://i.postimg.cc/prX195SW/nenhumkchorro.jpg'
+                } 
                 alt={postResponseAPI.description}
+                objectFit='cover'
+                maxH='30%'
+                maxW='100%'
               />
             </Box>
           </Flex>
