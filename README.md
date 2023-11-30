@@ -3,6 +3,7 @@
 
 # How to use?
 ### You need to create a new account using our [site](https://pet-foundation.github.io/Pata-Amiga-LandingPage/) to register. 
+
 <p align="center">
 <img src="https://github.com/PET-foundation/Pata-Amiga/assets/124841543/70901fba-a32a-40d2-aeb9-8dff55674226" alt="Login" width="500" height="300">
 </p>
@@ -22,15 +23,13 @@
 ![Home page](https://github.com/PET-foundation/Pata-Amiga/assets/124841543/260bb026-abae-406f-9597-290b781e62aa)
 </p>
 
-
-```bash
+```shell
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
 ```
-
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
