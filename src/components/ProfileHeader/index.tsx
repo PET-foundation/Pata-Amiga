@@ -289,7 +289,7 @@ export function ProfileHeader({
                   placeholder='Escolha um nome para seu usuário'
                   variant="flushed"
                   value={makeUserAtSymbol(userNameInput).split('@').join('')}
-                  width={userLocationInput.length > 50 ? 'sm' : 'md'}
+                  width={userLocationInput && userLocationInput.length > 50 ? 'sm' : 'md'}
                 />
               </InputGroup>
             </>
