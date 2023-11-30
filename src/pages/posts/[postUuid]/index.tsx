@@ -73,8 +73,8 @@ function GetPostByUuid({postResponseAPI, ownerOfPost}: GetPostByUuidProps) {
                 } 
                 alt={postResponseAPI.description}
                 objectFit='cover'
-                maxH='30%'
-                maxW='100%'
+                height='300px'
+                width='500px'
               />
             </Box>
           </Flex>
