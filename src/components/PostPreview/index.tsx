@@ -63,7 +63,7 @@ export function PostPreview({
 
   return (
     <>
-      <VStack>
+      <VStack mb={5}>
         <Container
           maxW="container.sm"
           borderTopRadius={10}
