@@ -15,6 +15,7 @@ import {AiFillEdit, AiFillDelete} from 'react-icons/ai';
 import perfil from '/public/img/perfil.png';
 import nenhumkchorro from '/public/img/sadcata.jpg';
 import { useRouter } from 'next/router';
+import PostServieceMethods from '@/service/axios/posts/postsRequests';
 
 interface PostPreviewProps {
   profilePicture?: string;
@@ -57,8 +58,14 @@ export function PostPreview({
 
   const onDeletePost = () => {
     console.log(`deleting post ${postUuid}`);
-    areYouSureAlert(postUuid, session.user.token)
-    reload();
+    areYouSureAlert(postUuid, session.user.token, 
+      async (postUuid: string, token: string, _?: string)=> {
+        await PostServieceMethods.deletePostByUuid(postUuid, token);
+        reload();
+      }, 
+      "Postagem Excluida", 
+      "Sua postagem foi exluida com sucesso"
+    )
   }
 
   return (

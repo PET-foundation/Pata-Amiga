@@ -10,6 +10,7 @@ import {AiOutlineArrowLeft} from 'react-icons/ai'
 import { AdoptionPreview } from "@/components/AdoptionPreview";
 import UserServiceMethods from "@/service/axios/user/userRequests";
 import backpg from '/public/img/backpg.png';
+import { PetAditionalInfo } from "@/components/PetAditionalInfo";
 
 interface GetPostByUuidProps {
   postResponseAPI: PostResponse;
@@ -206,9 +207,12 @@ function GetPostByUuid({postResponseAPI, ownerOfPost, userUuid}: GetPostByUuidPr
                 variant='solid'
                 h={10}
                 mb={4}
-                >Esse animal foi adotado?</Button>
+                >
+                  Esse animal foi adotado?
+                </Button>
               </Box>
             )}
+            <PetAditionalInfo Specie={postResponseAPI.info.specie} />
       </Flex>
     </>
   )

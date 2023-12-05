@@ -39,6 +39,7 @@ export function TopMenu({ profilePicture, onSearch }: TopMenuProps) {
               mr="50"
               variant="flushed"
               placeholder="Pesquisa"
+              color="black"
               onChange={(e) => onSearch(e.target.value)}
             />
           </InputGroup>
