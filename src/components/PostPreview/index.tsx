@@ -14,6 +14,8 @@ import { useSession } from 'next-auth/react';
 import {AiFillEdit, AiFillDelete} from 'react-icons/ai';
 import perfil from '/public/img/perfil.png';
 import nenhumkchorro from '/public/img/sadcata.jpg';
+import { useRouter } from 'next/router';
+import PostServieceMethods from '@/service/axios/posts/postsRequests';
 
 interface PostPreviewProps {
   profilePicture?: string;
@@ -38,6 +40,7 @@ export function PostPreview({
 
 }: PostPreviewProps) {
   const { data: session, status } = useSession();
+  const {reload} = useRouter();
   console.log(`userUuid: ${userUuid} e postUserUuid: ${postUserUuid}`);
 
   const getPostCreatedAt = (postCreatedAt: string) => {
@@ -55,12 +58,19 @@ export function PostPreview({
 
   const onDeletePost = () => {
     console.log(`deleting post ${postUuid}`);
-    areYouSureAlert(postUuid, session.user.token)
+    areYouSureAlert(postUuid, session.user.token, 
+      async (postUuid: string, token: string, _?: string)=> {
+        await PostServieceMethods.deletePostByUuid(postUuid, token);
+        reload();
+      }, 
+      "Postagem Excluida", 
+      "Sua postagem foi exluida com sucesso"
+    )
   }
 
   return (
     <>
-      <VStack>
+      <VStack mb={5}>
         <Container
           maxW="container.sm"
           borderTopRadius={10}
@@ -101,17 +111,17 @@ export function PostPreview({
            )}
           </Flex>
         </Container>
-        <Link href={`/posts/${postUuid}`} fontStyle="unset">
+        <Link href={`/posts/${postUuid}`} fontStyle="unset" w="100%">
           <Container
-            maxW="container.sm"
             bg="white"
             color="black"
             border="0.1vh solid"
             borderColor="black"
+            w="100%"
            >
             <Flex
               direction="column"
-              w="100"
+              w="100%"
               gap={8}
               alignItems="center"
               paddingTop="3"
@@ -122,14 +132,14 @@ export function PostPreview({
                 textAlign="center"
                 whiteSpace="pre-wrap"
                 borderRadius={10}
-                noOfLines={4}
+                noOfLines={2}
               >
                 {description}
               </Text>
               <Center borderRadius={10}>
                 <Flex
                   direction="row"
-                  w="100"
+                  w="100%"
                   bg="blue.500"
                   gap={8}
                   alignItems="center"

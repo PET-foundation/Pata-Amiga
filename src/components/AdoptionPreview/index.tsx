@@ -2,6 +2,7 @@ import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, 
 import {FaWhatsapp} from 'react-icons/fa';
 import {AiOutlineMail, AiFillPhone, AiFillInstagram, AiFillFacebook} from 'react-icons/ai';
 import { useEffect, useState } from 'react';
+import { IoIosContact } from "react-icons/io";
 import UserServiceMethods from '@/service/axios/user/userRequests';
 import { popUplaert } from '@/utils/alerts/popUpAlert';
 import { alertTypes } from '@/utils/types/alertTypes';
@@ -48,7 +49,13 @@ export function AdoptionPreview({ userOwnerImage, userOwnerName, userContactInfo
         <Text fontSize="2xl" fontWeight="bold" mt={4} textAlign='center'>
           {userOwnerName}
         </Text>
-        <Button onClick={onOpen}>Entrar em contato</Button>
+        <Button 
+          onClick={onOpen} 
+          leftIcon={<IoIosContact />} 
+          colorScheme='pink' 
+          variant='solid'
+          mb={4}
+          >Entrar em contato</Button>
 
         <Modal onClose={onClose} isOpen={isOpen} isCentered size='lg'>
         <ModalOverlay />

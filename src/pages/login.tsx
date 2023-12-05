@@ -48,6 +48,10 @@ function Login() {
 
   const formBackground = useColorModeValue('yellow.50', 'yellow.700');
 
+  const handleGoogleLogin = async () => {
+    signIn('google');
+  }
+
   return (
     <>
       <Head>
@@ -66,7 +70,9 @@ function Login() {
       <Flex height="100vh" alignItems="center" justifyContent="center">
         <Flex  direction="column" background={formBackground} p={12} rounded={6}>
           <Heading  mb={6}> <Image src='/img/imagemlogin.png' height="10vh" alt="Logo" mx="auto" my="auto"  /> </Heading>
-          <LoginForm onLogin={handleLogin} isSubmitting={isSubmitting} />
+          <LoginForm onLogin={handleLogin} isSubmitting={isSubmitting}
+            onGoogleLogin={handleGoogleLogin}
+          />
         </Flex>
       </Flex>
       </Flex>

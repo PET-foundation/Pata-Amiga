@@ -122,6 +122,7 @@ export default function Home({ userResponseAPI, allPosts, sheltersResponse }: Ho
           isReadOnly
           w="34vh"
           mt={2}
+          mb={2}
         />
         <AiOutlineSend size={40}/>
         </Flex>

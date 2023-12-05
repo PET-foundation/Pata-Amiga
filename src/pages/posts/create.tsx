@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { Image, background, Button} from "@chakra-ui/react";
 import backpg from '/public/img/backpg.png';
 import {FaPaw} from 'react-icons/fa';
+import Head from "next/head";
 
 function Create() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,22 +46,27 @@ function Create() {
     }
   }
   return (
-    <Box backgroundImage="url('/img/background-render.png')"
-         backgroundSize="100% 100%"
-         backgroundPosition="center"
-         width="100vw"
-         height="100vh">
-    
-    <Flex  alignItems="center" justifyContent="center">
-    <Link href='/'>
-      <Image src={backpg.src} h='5vh' position='absolute' top='50' left='300'  alt='voltar' />
-    </Link>
-      <Flex direction="column" p={12} rounded={6} w='40%'>
-        <Heading mb={6}>Nova publicação</Heading>
-      <CreatePostForm onSubmit={handleCreatePost} />
+   <>
+    <Head>
+        <title>Postar | PetAdote</title>
+    </Head>
+      <Box backgroundImage="url('/img/background-render.png')"
+          backgroundSize="100% 100%"
+          backgroundPosition="center"
+          width="100vw"
+          height="100vh">
+      
+      <Flex  alignItems="center" justifyContent="center">
+      <Link href='/'>
+        <Image src={backpg.src} h='5vh' position='absolute' top='50' left='300'  alt='voltar' />
+      </Link>
+        <Flex direction="column" p={12} rounded={6} w='40%'>
+          <Heading mb={6}>Nova publicação</Heading>
+        <CreatePostForm onSubmit={handleCreatePost} />
+          </Flex>
         </Flex>
-      </Flex>
-    </Box>
+      </Box>
+    </>
   );
 }
 

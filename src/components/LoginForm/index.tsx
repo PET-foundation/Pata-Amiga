@@ -11,15 +11,15 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
 
 interface LoginFormProps {
   onLogin: (email: string, password: string) => void;
   isSubmitting: boolean;
-  /* onGoogleLogin: () => void; */
+  onGoogleLogin: () => void;
 }
 
-export default function LoginForm({ onLogin, isSubmitting }: LoginFormProps) {
+export default function LoginForm({ onLogin, isSubmitting, onGoogleLogin }: LoginFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -98,6 +98,15 @@ export default function LoginForm({ onLogin, isSubmitting }: LoginFormProps) {
           type="submit"
         >
           Entrar
+        </Button>
+        <Button 
+          colorScheme='twitter' 
+          leftIcon={<FaGoogle />}
+          width="30vh"
+          mb={3}
+          onClick={onGoogleLogin}
+          >
+            Google
         </Button>
         <Button
         as={Link}

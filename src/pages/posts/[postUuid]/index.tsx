@@ -1,7 +1,7 @@
 import PostServieceMethods from "@/service/axios/posts/postsRequests";
 import { PostResponse, userResponse } from "@/service/axios/user/userResponses";
 import { PortTypes } from "@/utils/types/portTypes";
-import { Box, Flex, Image, Link, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Link, Text } from "@chakra-ui/react";
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import { getSession, useSession } from "next-auth/react";
 import Head from "next/head";
@@ -10,14 +10,17 @@ import {AiOutlineArrowLeft} from 'react-icons/ai'
 import { AdoptionPreview } from "@/components/AdoptionPreview";
 import UserServiceMethods from "@/service/axios/user/userRequests";
 import backpg from '/public/img/backpg.png';
+import { PetAditionalInfo } from "@/components/PetAditionalInfo";
 
 interface GetPostByUuidProps {
   postResponseAPI: PostResponse;
   ownerOfPost: userResponse;
+  userUuid: string;
 }
 
-function GetPostByUuid({postResponseAPI, ownerOfPost}: GetPostByUuidProps) {
+function GetPostByUuid({postResponseAPI, ownerOfPost, userUuid}: GetPostByUuidProps) {
   const { data: session, status } = useSession();
+  const userToken = session?.user.token;
 
   const booleanToYesOrNo = (boolean: boolean) => {
     return boolean ? "Sim" : "Não";
@@ -60,13 +63,21 @@ function GetPostByUuid({postResponseAPI, ownerOfPost}: GetPostByUuidProps) {
           <Flex
             justifyContent="center"
             alignItems="center"
-            height="100vh" // Defina a altura da tela inteira
+            height="100%" 
+            width="100vw"
             mt={10}
           >
-            <Box >
+            <Box 
+            maxW='100%'
+            >
               <Image 
-                src={postResponseAPI.picture ? postResponseAPI.picture : 'https://i.postimg.cc/prX195SW/nenhumkchorro.jpg'} 
+                src={postResponseAPI.picture ? 
+                  postResponseAPI.picture : 'https://i.postimg.cc/prX195SW/nenhumkchorro.jpg'
+                } 
                 alt={postResponseAPI.description}
+                objectFit='cover'
+                height='300px'
+                width='500px'
               />
             </Box>
           </Flex>
@@ -189,6 +200,19 @@ function GetPostByUuid({postResponseAPI, ownerOfPost}: GetPostByUuidProps) {
                 facebook: ownerOfPost.contact.facebook
               }}
             />
+            {postResponseAPI.userUuid == userUuid && (
+              <Box mt={5}>
+                <Button
+                colorScheme='blue' 
+                variant='solid'
+                h={10}
+                mb={4}
+                >
+                  Esse animal foi adotado?
+                </Button>
+              </Box>
+            )}
+            <PetAditionalInfo Specie={postResponseAPI.info.specie} />
       </Flex>
     </>
   )
@@ -217,6 +241,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   let postResponseAPI: PostResponse;
   let ownerOfPost: userResponse;
+  let userUuid: string;
 
   try {
     const post = await PostServieceMethods.getPostByUuid(
@@ -228,6 +253,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const user =  await UserServiceMethods.getUserByUuid(token, post.userUuid);
     ownerOfPost = user;
+
+    const userAuthenticaded = await UserServiceMethods.getUserTheirSelf(token);
+    userUuid = userAuthenticaded.uuid;
   } catch (error) {
     console.log(error);
   }
@@ -237,7 +265,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       session,
       postResponseAPI: postResponseAPI,
-      ownerOfPost: ownerOfPost
+      ownerOfPost: ownerOfPost,
+      userUuid
     },
   };
 };
